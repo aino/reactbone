@@ -36,4 +36,4 @@ require.config({
     }
   }
 });
-require(['jquery','aino','underscore','backbone','store','react','JSXTransformer','jsx','jsx!app']);
+require(['jquery','aino','underscore','backbone','store','react','JSXTransformer','jsx','app']);

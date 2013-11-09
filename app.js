@@ -18,7 +18,7 @@ define(function(require) {
     })
   })
 
-  // create the app
+  // create the top-level react app
   var App = AppComponent({
   	cards: cards
   });
@@ -36,8 +36,8 @@ define(function(require) {
   var dispatch = new Router()
 
   dispatch.on('route', function(url) {
-  	// set state on App
-  	App.route(url)
+    // set state on App
+    App.route(url)
   })
 
   Backbone.history.start()

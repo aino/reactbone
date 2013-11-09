@@ -6,7 +6,10 @@ define(function(require) {
       render: function() {
         var cards = this.props.cards.map(function(card) {
           return (
-            <li key={Math.random()}><h2>{card.get('title')}</h2> <p>{card.get('summary')}</p></li>
+            <li key={Math.random()}>
+              <h2>{card.get('title')}</h2>
+              <p>{card.get('summary')}</p>
+            </li>
           )
         })
         return (<ul>{cards}</ul>)
