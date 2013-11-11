@@ -1,0 +1,15 @@
+{
+  "components": [
+      {"name": "app", "src": "app.js", "dest": "app.bundle.js"}
+  ],
+  "libs": [
+      {"name": "jquery", "noParse": true}
+    , {"name": "backbone", "manifest": "package.json"}
+    , {"name": "store", "src": "lib/backbone.localStorage.js"}
+    , {"name": "react", "noParse": true}
+  ],
+  "libsMeta": {
+      "name": "libs"
+    , "dest": "libs.bundle.js"
+  }
+}

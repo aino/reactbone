@@ -1,1 +1,11 @@
+*.swp
+*.swo
+.~*
 .DS_Store
+._*
+*.o
+*.a
+*.pyc
+node_modules
+bower_components
+public/build

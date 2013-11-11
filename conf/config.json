@@ -1,0 +1,14 @@
+{
+  "global": {
+      "redis": { "database": 1, "host": "localhost", "port": 6379 }
+    , "mongo": { "database": "reactbone", "host": "localhost", "port": 27017 }
+    , "secret": "R34CT80N3"
+  },
+
+  "production": {
+  },
+
+  "development": {
+      "port": 8000
+  }
+}
