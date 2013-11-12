@@ -4,6 +4,7 @@
   ],
   "libs": [
       {"name": "jquery", "noParse": true}
+    , {"name": "underscore", "manifest": "package.json"}
     , {"name": "backbone", "manifest": "package.json"}
     , {"name": "store", "src": "lib/backbone.localStorage.js"}
     , {"name": "react", "noParse": true}
