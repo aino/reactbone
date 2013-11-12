@@ -6,7 +6,7 @@ var clientDir = path.join(__dirname, '..', 'client')
   , buildDir = path.join(__dirname, '..', 'public/build')
 
 
-var Component = function(opts) {
+var App = function(opts) {
   var self = this
   self.name = opts.name
   self.src = path.join(clientDir, opts.src)
@@ -17,7 +17,7 @@ var Component = function(opts) {
 var Lib = function(opts) {
   var self = this
   self.name = opts.name
-  self.opts = { expose: opts.name }
+  self.opts = { expose: opts.expose || opts.name }
   self.src = opts.src && path.join(clientDir, opts.src)
   self.modulesDir = opts.modulesDir || 'bower_components'
   self.manifest = opts.manifest || 'bower.json'
@@ -25,9 +25,9 @@ var Lib = function(opts) {
   self.id = self.src || self.name
 }
 
-var components = []
-assets.components.forEach(function(c) {
-  components.push(new Component(c))
+var apps = []
+assets.apps.forEach(function(c) {
+  apps.push(new App(c))
 })
 
 var libs = []
@@ -42,6 +42,6 @@ var libsMeta = {
 }
 
 
-exports.components = components
+exports.apps = apps
 exports.libs = libs
 exports.libsMeta = libsMeta

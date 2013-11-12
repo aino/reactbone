@@ -19,7 +19,7 @@
     "express": "~3.4.4",
     "connect-redis": "~1.4.5",
     "redis": "~0.9.0",
-    "browserify": "git+ssh://git@github.com:aino/node-browserify.git",
+    "browserify": "git+https://github.com/aino/node-browserify.git",
     "watchify": "~0.3.0",
     "react-tools": "~0.5.1",
     "reactify": "~0.4.0",

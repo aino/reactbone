@@ -1,7 +1,7 @@
 reactbone
 =========
 
-Testar lite setup med Backbone + React + RequireJS
+Testar lite setup med Backbone + React + Browserify
 
 install
 -------
