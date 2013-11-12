@@ -8,7 +8,7 @@ var fs = require('fs')
   , db = require('../conf/db')
   , crypto = require('crypto')
   , async = require('async')
-  , components = require('../conf/assets').components
+  , apps = require('../conf/assets').apps
   , libs = require('../conf/assets').libs
   , libsMeta = require('../conf/assets').libsMeta
 
@@ -62,7 +62,7 @@ var bundleLibs = function(debug) {
   bundleQue.push({br: br, name: libsMeta.name, dest: libsMeta.dest, debug: debug})
 }
 
-var bundleComponent = function(c, debug) {
+var bundleApp = function(c, debug) {
   var br = browserify(c.src)
   libs.forEach(function(lib) {
     br.external(lib.name)
@@ -72,7 +72,7 @@ var bundleComponent = function(c, debug) {
 }
 
 
-var listenComponent = function(c, debug) {
+var listenApp = function(c, debug) {
   var w = watchify(c.src)
   libs.forEach(function(lib) {
     w.external(lib.name)
@@ -89,16 +89,16 @@ var bundle = function(all, debug) {
   if (all) {
     bundleLibs(debug)
   }
-  components.forEach(function(c) {
-    bundleComponent(c, debug)
+  apps.forEach(function(c) {
+    bundleApp(c, debug)
   })
   bundleQue.drain = function() { db.close() }
 }
 
 
 var listen = function(debug) {
-  components.forEach(function(c) {
-    listenComponent(c, debug)
+  apps.forEach(function(c) {
+    listenApp(c, debug)
   })
 }
 

@@ -10,7 +10,7 @@ exports.bundles = function(req, res, next) {
         res.locals.bundles[name] = '<script src="' + url + v + '"></script>'
     }
     updateLocals(assets.libsMeta.name, assets.libsMeta.url)
-    assets.components.forEach(function(c){
+    assets.apps.forEach(function(c){
       updateLocals(c.name, c.url)
     })
     next()
