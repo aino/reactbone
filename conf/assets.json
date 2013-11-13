@@ -1,6 +1,10 @@
 {
   "apps": [
-      {"name": "app", "src": "app.js", "dest": "app.bundle.js"}
+      {
+        "name": "app", 
+        "src": "app.js", 
+        "dest": "app.bundle.js"
+      }
   ],
   "libs": [
       {"name": "jquery", "noParse": true}

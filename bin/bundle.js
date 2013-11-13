@@ -12,7 +12,6 @@ var fs = require('fs')
   , libs = require('../conf/assets').libs
   , libsMeta = require('../conf/assets').libsMeta
 
-
 var bundleQue = async.queue(function(opts, callback) {
   opts.br.bundle({debug: opts.debug}, function(err, code) {
     if (err) {

@@ -7,9 +7,13 @@ var $ = require('jquery')
 
 Backbone.$ = $
 
+// we need a way to include libs from bower easier, this will fail:
+//var str = require('underscore.string');
 
 // initialize cards
 var cards = new CardCollection()
+
+console.log(cards)
 
 // make dummy cards
 for (var j=0; j<20; j++) {
