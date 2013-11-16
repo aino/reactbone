@@ -10,16 +10,15 @@ Backbone.$ = $
 // we need a way to include libs from bower easier, this will fail:
 //var str = require('underscore.string');
 
+
 // initialize cards
 var cards = new CardCollection()
-
-console.log(cards)
 
 // make dummy cards
 for (var j=0; j<20; j++) {
   cards.push({
     title: Lipsum.words(2,5,true),
-    summary: Lipsum.sentence(10,20)
+    summary: Lipsum.sentences(10,20)
   })
 }
 

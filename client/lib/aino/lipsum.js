@@ -1,5 +1,11 @@
-(function(a,b){if(typeof module=='object'){module.exports=b()}else if(typeof define=='function'){define([a],b())}else{window[a]=fn()}})
-('Lipsum', function() {
+/*
+ * Lipsum
+ * Create random lipsum words, sentences or paragraphs
+ * First & second arguments defines a range, f.ex Lipsum.word(2,6) returns minimum 2 and maximum 6 words.
+ */
+
+!function(a,i,n,o){o=i.length&&typeof require=="function"?function(e,t,n){n=[];for(t=0;t<i.length;t++){n.push(require(i[t]))}return e.apply(this,n)}(n):n();if(typeof module=="object"){module.exports=o}else if(typeof define=="function"){define(a,i,n())}else{this[a]=o}}.call
+(this, 'Lipsum', [], function() {
 
   var words = 'lorem ipsum dolor sit amet consectetur adipiscing elit ut eget turpis dolor id elementum urna sed arcu magna accumsan volutpat tristique eu rhoncus at lectus quisque lacus ante semper in feugiat vitae commodo non mauris quisque vel sem sem maecenas pellentesque ultrices tristique fusce nibh enim porta in convallis id consequat quis purus fusce iaculis enim id mauris mollis id accumsan ipsum sagittis quisque in pharetra magna integer a mattis mauris nulla condimentum molestie massa a malesuada diam rutrum vel suspendisse fermentum lacus id erat volutpat cursus donec at felis ante eget cursus risus nunc in odio nec mi gravida rutrum nec pulvinar turpis quisque id tellus sem nunc sed dui quis mi tristique viverra'.split(' ')
   var endings = "................................??!"
@@ -7,8 +13,8 @@
   var rand = function( len ) {
         return Math.floor( Math.random() * len )
       }
-    , range = function( from, to ) {
-        return rand( to - from + 1 ) + from
+    , range = function( min, max ) {
+        return rand( max - min + 1 ) + min
       }
     , capitalize = function( word ) {
         return word.substr(0,1).toUpperCase() + word.substr(1)
@@ -23,65 +29,65 @@
 
   return {
 
-    words: function( no, to, cap ) {
-      no = no || 1
+    words: function( min, max, cap ) {
+      min = min || 1
 
-      if ( no < 1 )
+      if ( min < 1 )
         return ''
 
-      if ( to === true ) {
+      if ( max === true ) {
         cap = true
-        to = undefined
+        max = undefined
       }
-      if ( typeof to == 'number' )
-        no = range(no, to)
+      if ( typeof max == 'number' )
+        min = range(min, max)
 
       var text = cap ? capitalize(word()) : word()
 
-      while( no-- )
+      while( min-- )
         text += word() + ' '
 
       return text.replace(/^\s+|\s+$/g, '')
     },
 
-    sentence: function( no, to ) {
-      no = no || 8
+    sentences: function( min, max ) {
+      min = min || 8
 
-      if ( no < 1 )
+      if ( min < 1 )
         return ''
 
-      if ( typeof to == 'number' )
-        no = range(no, to)
+      if ( typeof max == 'number' )
+        min = range(min, max)
 
       var text = capitalize( word() )
-        , comma = rand(2) ? rand( no-1 ) : false
+        , comma = rand(2) ? rand( min-1 ) : false
 
-      while( no-- )
-        text += word() + (( comma && comma === no ) ? ', ' : ' ')
+      while( min-- )
+        text += word() + (( comma && comma === min ) ? ', ' : ' ')
 
       return text.replace(/\s+/,' ').substr(0, text.length-2) + '.'
     },
 
-    paragraph: function( no, to ) {
-      no = no || 40
-      if ( no < 1 )
+    paragraphs: function( min, max ) {
+      min = min || 40
+      if ( min < 1 )
         return ''
 
-      if ( no < 8 )
-        return Lipsum.sentence( no )
+      if ( min < 8 )
+        return Lipsum.sentence( min )
 
-      if ( typeof to == 'number' )
-        no = range(no, to)
+      if ( typeof max == 'number' )
+        min = range(min, max)
 
-      var sentences = Math.floor(no/8)
-        , rest = no - (sentences * 8)
+      var sentences = Math.floor(min/8)
+        , rest = min - (sentences * 8)
         , text = ''
 
       while( sentences-- )
-        text += Lipsum.sentence( 8 ) + ' '
+        text += this.sentence( 8 ) + ' '
 
       if ( rest )
-        return text + Lipsum.sentence(rest)
+        return text + this.sentence(rest)
       else
         return text.substr(0, text.length-2)
     }
