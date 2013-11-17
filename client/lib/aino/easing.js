@@ -6,7 +6,7 @@
  * To convert a bezier curve to function use toFunction: Easing.toFunction([0.165, 0.84, 0.44, 1])
  */
 
-!function(a,i,n,o){o=i.length&&typeof require=="function"?function(e,t,n){n=[];for(t=0;t<i.length;t++){n.push(require(i[t]))}return e.apply(this,n)}(n):n();if(typeof module=="object"){module.exports=o}else if(typeof define=="function"){define(a,i,n())}else{this[a]=o}}.call
+!function(a,i,n,o){o=i.length&&typeof require=="function"?function(e,t,n){n=[];for(t=0;t<i.length;t++){n.push(require(i[t]))}return e.apply(null,n)}(n):n();if(typeof module=="object"){module.exports=o}else if(typeof define=="function"){define(a,i,n())}else{this[a]=o}}.call
 (this, 'Easing', [], function() {
 
   var easings = {
@@ -51,7 +51,7 @@
     return easings[type]
   }
 
-  var makeFunction = function(bez) {
+  var toFunction = function(bez) {
     var polyBez = function(p1, p2) {
       var A = [null, null], B = [null, null], C = [null, null]
         , bezCoOrd = function(t, ax) {
@@ -80,12 +80,12 @@
   }
 
   var easing = function(type) {
-    return makeFunction(validate(type))
+    return toFunction(validate(type))
   }
   easing.bez = function(type) {
     return validate(type)
   }
-  easing.toFunction = makeFunction
+  easing.toFunction = toFunction
 
   return easing
 })

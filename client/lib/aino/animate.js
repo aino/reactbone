@@ -6,7 +6,7 @@
  * You can cancel an animation from the object returned, f.ex: var a = Animate({from: 0, to: 10}); a.stop();
  */
 
-!function(a,i,n,o){o=i.length&&typeof require=="function"?function(e,t,n){n=[];for(t=0;t<i.length;t++){n.push(require(i[t]))}return e.apply(this,n)}(n):n();if(typeof module=="object"){module.exports=o}else if(typeof define=="function"){define(a,i,n())}else{this[a]=o}}.call
+!function(a,i,n,o){o=i.length&&typeof require=="function"?function(e,t,n){n=[];for(t=0;t<i.length;t++){n.push(require(i[t]))}return e.apply(null,n)}(n):n();if(typeof module=="object"){module.exports=o}else if(typeof define=="function"){define(a,i,n())}else{this[a]=o}}.call
 (this, 'Animate', [], function() {
 
   var requestFrame = (function(){
@@ -51,9 +51,7 @@
         if ( !this.hasOwnProperty('distance') ) {
           this.distance = distance
         }
-        if ( !this.start ) {
-          this.start = +new Date()
-        }
+        this.start = this.start || +new Date()
 
         if ( Math.abs( distance ) <= options.threshold ) {
           return this.stop( true )
@@ -75,8 +73,6 @@
         if ( finish ) {
           animation.value = options.to
           options.step.call(this, options.to, 1)
-          delete animation.start
-          delete animation.distance
         }
         options.complete.call(animation)
         return this
