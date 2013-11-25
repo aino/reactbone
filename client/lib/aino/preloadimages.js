@@ -9,7 +9,7 @@
   return function(images, callback, progress, error) {
 
     var loaded = 0
-      , len = images.length
+    var len = images.length
 
     if (!len)
       $.isFunction(callback) && callback()
@@ -29,4 +29,5 @@
       }).attr('src', src)
     })
   }
+  
 })

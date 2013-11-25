@@ -13,13 +13,17 @@
     canvas: !!( 'getContext' in document.createElement('canvas') ),
 
     ie: (function() {
-      var v = 3,
-        div = document.createElement( 'div' ),
-        all = div.getElementsByTagName( 'i' )
-      do {
+
+      var v = 3
+      var div = document.createElement( 'div' )
+      var all = div.getElementsByTagName( 'i' )
+
+      do
         div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->'
-      } while ( all[0] )
-      return v > 4 ? v : undefined
+      while 
+        (all[0])
+      return v > 4 ? v : document.documentMode
+
     }()),
 
     iphone: isWebkit && /iPhone/.test( platform ),
@@ -30,21 +34,22 @@
     chrome: /chrome/.test(ua),
 
     mac: platform.toUpperCase().indexOf('MAC') >= 0,
+    
     translate3d: (function() {
-      var el = document.createElement('p'), 
-        has3d,
-        transforms = {
+      var el = document.createElement('p')
+      var has3d
+      var transforms = {
           'webkitTransform':'-webkit-transform',
           'OTransform':'-o-transform',
           'msTransform':'-ms-transform',
           'MozTransform':'-moz-transform',
           'transform':'transform'
-        }
+      }
 
       document.documentElement.insertBefore(el, null)
 
       for (var t in transforms) {
-        if (el.style[t] !== undefined) {
+        if ( typeof el.style[t] != 'undefined' ) {
           el.style[t] = 'translate3d(1px,1px,1px)'
           has3d = window.getComputedStyle(el).getPropertyValue(transforms[t])
         }

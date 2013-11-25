@@ -1,15 +1,13 @@
 /** @jsx React.DOM */
 var React = require('react')
-  , CardsComponent = require('./cards')
-
+var CardsComponent = require('./cards')
 
 module.exports = React.createClass({
+
   getInitialState: function() {
     return { url: 'loading' }
   },
-  route: function( url ) {
-    this.setState({ url: url })
-  },
+
   mixins: [{
     componentDidMount: function() {
       this.getBackboneModels().forEach(function(model) {
@@ -22,13 +20,17 @@ module.exports = React.createClass({
       }, this)
     }
   }],
+
   getBackboneModels: function() {
     return [this.props.cards];
   },
+  
   render: function() {
 
     // rendering logic based on state goes here
-    var main = <CardsComponent cards={this.props.cards}/>
+    var main = CardsComponent({
+      cards: this.props.cards
+    })
 
     if ( this.state.url == '1up' ) {
       main = (<h1>Extraliv!!</h1>)

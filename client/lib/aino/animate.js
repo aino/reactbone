@@ -36,9 +36,8 @@
     }
 
     for( var i in defaults ) {
-      if ( !options.hasOwnProperty(i) ) {
+      if ( !options.hasOwnProperty(i) )
         options[ i ] = defaults[ i ]
-      }
     }
 
     var animation = {
@@ -46,16 +45,15 @@
       value: options.from,
       loop: function() {
         var self = this,
-        distance = options.to - this.value;
+        distance = options.to - this.value
 
-        if ( !this.hasOwnProperty('distance') ) {
+        if ( !this.hasOwnProperty('distance') )
           this.distance = distance
-        }
+
         this.start = this.start || +new Date()
 
-        if ( Math.abs( distance ) <= options.threshold ) {
+        if ( Math.abs( distance ) <= options.threshold )
           return this.stop( true )
-        }
 
         this.value = options.easing(null, +new Date() - this.start, options.from, this.distance, options.duration)
         this.factor = (this.value-options.from)/this.distance;

@@ -11,21 +11,21 @@
   var endings = "................................??!"
 
   var rand = function( len ) {
-        return Math.floor( Math.random() * len )
-      }
-    , range = function( min, max ) {
-        return rand( max - min + 1 ) + min
-      }
-    , capitalize = function( word ) {
-        return word.substr(0,1).toUpperCase() + word.substr(1)
-      }
-    , word = function() {
-        return words[rand(words.length)]
-      }
-    , ending = function() {
-        var i = rand(endings.length)
-        return endings.substring(i, i+1)
-      }
+    return Math.floor( Math.random() * len )
+  }
+  var range = function( min, max ) {
+    return rand( max - min + 1 ) + min
+  }
+  var capitalize = function( word ) {
+    return word.substr(0,1).toUpperCase() + word.substr(1)
+  }
+  var word = function() {
+    return words[rand(words.length)]
+  }
+  var ending = function() {
+    var i = rand(endings.length)
+    return endings.substring(i, i+1)
+  }
 
   return {
 
@@ -60,7 +60,7 @@
         min = range(min, max)
 
       var text = capitalize( word() )
-        , comma = rand(2) ? rand( min-1 ) : false
+      var comma = rand(2) ? rand( min-1 ) : false
 
       while( min-- )
         text += word() + (( comma && comma === min ) ? ', ' : ' ')
@@ -80,8 +80,8 @@
         min = range(min, max)
 
       var sentences = Math.floor(min/8)
-        , rest = min - (sentences * 8)
-        , text = ''
+      var rest = min - (sentences * 8)
+      var text = ''
 
       while( sentences-- )
         text += this.sentence( 8 ) + ' '

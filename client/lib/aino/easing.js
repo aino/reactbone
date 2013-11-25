@@ -42,34 +42,35 @@
   }
 
   var validate = function(type) {
-    if (!type) {
+    if (!type)
       return easings.linear // allows Easing()
-    }
-    if ( !easings.hasOwnProperty(type) ) {
+
+    if ( !easings.hasOwnProperty(type) )
       throw 'Easing '+type+' not found.'
-    }
+
     return easings[type]
   }
 
   var toFunction = function(bez) {
     var polyBez = function(p1, p2) {
       var A = [null, null], B = [null, null], C = [null, null]
-        , bezCoOrd = function(t, ax) {
-            C[ax] = 3 * p1[ax], B[ax] = 3 * (p2[ax] - p1[ax]) - C[ax], A[ax] = 1 - C[ax] - B[ax]
-            return t * (C[ax] + t * (B[ax] + t * A[ax]))
-          }
-        , xDeriv = function(t) {
-            return C[0] + t * (2 * B[0] + 3 * A[0] * t)
-          }
-        , xForT = function(t) {
-            var x = t, i = 0, z
-            while (++i < 14) {
-              z = bezCoOrd(x, 0) - t
-              if (Math.abs(z) < 1e-3) break
-              x -= z / xDeriv(x)
-            }
-            return x
-          }
+      var bezCoOrd = function(t, ax) {
+        C[ax] = 3 * p1[ax], B[ax] = 3 * (p2[ax] - p1[ax]) - C[ax], A[ax] = 1 - C[ax] - B[ax]
+        return t * (C[ax] + t * (B[ax] + t * A[ax]))
+      }
+      var xDeriv = function(t) {
+        return C[0] + t * (2 * B[0] + 3 * A[0] * t)
+      }
+      var xForT = function(t) {
+        var x = t, i = 0, z
+        while (++i < 14) {
+          z = bezCoOrd(x, 0) - t
+          if (Math.abs(z) < 1e-3) 
+            break
+          x -= z / xDeriv(x)
+        }
+        return x
+      }
       return function(t) {
         return bezCoOrd(xForT(t), 1)
       }
@@ -85,6 +86,7 @@
   easing.bez = function(type) {
     return validate(type)
   }
+  
   easing.toFunction = toFunction
 
   return easing

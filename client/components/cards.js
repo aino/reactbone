@@ -1,28 +1,27 @@
 /** @jsx React.DOM */
 var React = require('react')
-var OpenWindow = require('../lib/aino/openwindow')
+var CardComponent = require('../components/card')
+var $ = require('jquery')
+var masonry = require('../lib/masonry/masonry')
+
+console.log(define, masonry)
 
 module.exports = React.createClass({
-  clickHandler: function(e) {
-    OpenWindow('http://aino.com', {
-      width: 500,
-      height: 500,
-      onfail: function() {
-        console.error('FAIL')
-      }
-    })
+
+  componentDidMount: function(ul) {
+    console.log(ul)
+    //this.masonry = new Masonry(ul)
   },
+
+  componentWillUnmount: function() {
+    //$(window).off('scroll resize', $(window).data('lazyHandler'))
+  },
+
   render: function() {
     var scope = this
     var cards = this.props.cards.map(function(card) {
-      return (
-        <li key={Math.random()}>
-          <h2>{card.get('title')}</h2>
-          <p><strong>Hello: </strong>{ card.get('summary') }</p>
-          <button onClick={scope.clickHandler}>Click me</button>
-        </li>
-      )
+      return CardComponent({ card: card, key: Math.random() })
     })
-    return (<ul>{cards}</ul>)
+    return (<ul ref="ul">{cards}</ul>)
   }
 })
