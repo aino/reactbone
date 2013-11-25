@@ -1,6 +1,10 @@
+
+!function(a,i,n,o){o=i.length&&typeof require=="function"?function(e,t,n){n=[];for(t=0;t<i.length;t++){n.push(require(i[t]))}return e.apply(null,n)}(n):n();if(typeof module=="object"){module.exports=o}else if(typeof define=="function"){define(a,i,n())}else{this[a]=o}}.call
+(this, 'Masonry', [], function() {
+
 (function() {
 
-var root = {};
+var define,exports,module;
 
 /*!
  * Masonry PACKAGED v3.1.2
@@ -1029,7 +1033,7 @@ if ( typeof define === 'function' && define.amd ) {
   define( 'get-size/get-size',[ 'get-style-property/get-style-property' ], defineGetSize );
 } else if ( typeof exports === 'object' ) {
   // CommonJS for Component
-  module.exports = defineGetSize( require('get-style-property') );
+  // module.exports = defineGetSize( require('get-style-property') );
 } else {
   // browser global
   window.getSize = defineGetSize( window.getStyleProperty );
@@ -2860,8 +2864,10 @@ if ( typeof define === 'function' && define.amd ) {
   );
 }
 
-})( root );
-
-module.exports = root.Masonry;
+})( window );
 
 }());
+
+return window.Masonry;
+
+});

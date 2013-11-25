@@ -2,6 +2,8 @@
 var React = require('react')
 var $ = require('jquery')
 
+var n =0;
+
 module.exports = React.createClass({
 
   lazyLoad: function($li) {
@@ -18,6 +20,10 @@ module.exports = React.createClass({
     }.bind(this)
     $(window).data('lazyHandler', handler).on('scroll resize', handler)
     handler()
+
+    if ( 'layout' in this.props.masonry ) {
+      this.props.masonry.layout()
+    }
   },
 
   componentWillUnmount: function() {
@@ -34,7 +40,9 @@ module.exports = React.createClass({
 
     return(
       <li>
-        <img data-src="http://placekitten.com/g/140/140" src="#" />
+        <div className="image">
+          <img data-src="http://placekitten.com/g/140/140" src="#" />
+        </div>
         <h2>{card.get('title')}</h2>
         <p><strong>Hello: </strong>{ card.get('summary') }</p>
         <button onClick={this.clickHandler}>Click me</button>
