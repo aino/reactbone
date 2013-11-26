@@ -44,7 +44,7 @@ Backbone.history.start()
 
 // backbone test
 setTimeout(function() {
-  cards.at(0).set('title', '2 SECOND HAS PASSED')
+  cards.at(0).set('title', '2 SECOND HAS PASSED MUTHERFUCKER!! HELL YEA BRING DA NOIZE')
   setTimeout(function() {
     cards.at(1).set('title', '10 SECONDS HAS PASSED')
   },8000)

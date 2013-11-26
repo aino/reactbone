@@ -18,10 +18,18 @@ module.exports = React.createClass({
     var handler = function() {
       this.lazyLoad.call(this, $(li))
     }.bind(this)
-    $(window).data('lazyHandler', handler).on('scroll resize', handler)
-    handler()
 
-    if ( 'layout' in this.props.masonry ) {
+    $(window).data('lazyHandler', handler).on('scroll resize', handler)
+
+    if ( this.props.masonry ) {
+      this.props.masonry.layout()
+    }
+
+    setTimeout(handler,100)
+  },
+
+  componentDidUpdate: function() {
+    if ( this.props.masonry ) {
       this.props.masonry.layout()
     }
   },

@@ -11,7 +11,9 @@ module.exports = React.createClass({
   mixins: [{
     componentDidMount: function() {
       this.getBackboneModels().forEach(function(model) {
-        model.on('add change remove', this.forceUpdate.bind(this, null), this)
+        model.on('add change remove', function() {
+          this.forceUpdate()
+        }, this)
       }, this)
     },
     componentWillUnmount: function() {
