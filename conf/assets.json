@@ -11,11 +11,13 @@
     , {"name": "underscore", "manifest": "package.json"}
     , {"name": "underscore.string", "manifest": "package.json"}
     , {"name": "backbone", "manifest": "package.json"}
-    , {"name": "backbone.localStorage", "expose": "store"}
     , {"name": "react", "noParse": true}
   ],
   "libsMeta": {
       "name": "libs"
     , "dest": "libs.bundle.js"
-  }
+  },
+  "styles": [
+      "../lib/medium-editor/dist/css/medium-editor.css"
+  ]
 }

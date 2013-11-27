@@ -1,4 +1,5 @@
 /** @jsx React.DOM */
+
 var React = require('react')
 var CardsComponent = require('./cards')
 
@@ -39,11 +40,13 @@ module.exports = React.createClass({
     }
 
     return (
-      <div className={this.state.url}>
-        <div className="menu">
-          <a href="#">Home</a><a href="#1up">1up</a>
+      <div id="site">
+        <div className={this.state.url}>
+          <div className="menu">
+            <a href="#">Home</a><a href="#1up">1up</a>
+          </div>
+          {main}
         </div>
-        {main}
       </div>
     )
   }

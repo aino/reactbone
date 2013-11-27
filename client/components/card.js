@@ -1,8 +1,9 @@
 /** @jsx React.DOM */
+
 var React = require('react')
 var $ = require('jquery')
-
-var n =0;
+var ChangeListener = require('../lib/aino/changelistener')
+var MediumEditor = require('../lib/medium-editor/dist/js/medium-editor')
 
 module.exports = React.createClass({
 
@@ -15,6 +16,7 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function(li) {
+
     var handler = function() {
       this.lazyLoad.call(this, $(li))
     }.bind(this)
@@ -26,6 +28,19 @@ module.exports = React.createClass({
     }
 
     setTimeout(handler,100)
+
+    var contentNode = $(li).find('p')[0]
+
+    ChangeListener( contentNode, function(content) {
+      this.props.card.set({
+        content: content
+      })
+    }.bind(this), function() {
+      return this.innerHTML
+    })
+
+    var editor = new MediumEditor([contentNode]);
+
   },
 
   componentDidUpdate: function() {
@@ -38,22 +53,13 @@ module.exports = React.createClass({
     $(window).off('scroll resize', $(window).data('lazyHandler'))
   },
 
-  clickHandler: function() {
-    console.log('clicked')
-  },
-
   render: function() {
         
     var card = this.props.card
 
     return(
       <li>
-        <div className="image">
-          <img data-src="http://placekitten.com/g/140/140" src="#" />
-        </div>
-        <h2>{card.get('title')}</h2>
-        <p><strong>Hello: </strong>{ card.get('summary') }</p>
-        <button onClick={this.clickHandler}>Click me</button>
+        <p dangerouslySetInnerHTML={{__html: card.get('summary')}}></p>
       </li>
     )
   }

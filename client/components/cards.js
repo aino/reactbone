@@ -26,6 +26,14 @@ module.exports = React.createClass({
     $(window).off('resize', $(window).data('resizeHandler'))
   },
 
+  componentDidUpdate: function() {
+    /*
+    this.props.cards.forEach(function(card) {
+      card.save()
+    })
+    */
+  },
+
   resizeHandler: function() {
     masonry && masonry.layout()
   },

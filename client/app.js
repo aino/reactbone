@@ -11,10 +11,11 @@ Backbone.$ = $
 var cards = new CardCollection()
 
 // make dummy cards
-for (var j=0; j<20; j++) {
+
+for (var j=0; j<2; j++) {
   cards.push({
     title: Lipsum.words(2,5,true),
-    summary: Lipsum.sentences(10,20)
+    summary: Lipsum.sentences(10, 20)
   })
 }
 
@@ -22,6 +23,10 @@ for (var j=0; j<20; j++) {
 var App = AppComponent({
   cards: cards
 });
+
+cards.on('add change remove', function() {
+  console.log('EDIT', arguments)
+})
 
 React.renderComponent(App, document.body)
 
