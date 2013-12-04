@@ -2,28 +2,12 @@
 
 var React = require('react')
 var CardsComponent = require('./cards')
-var $ = require('jquery')
-
-require('../lib/fileupload/jquery.fileupload')
+var UploadComponent = require('./fileupload')
 
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return { url: 'loading', formkey: 0 }
-  },
-
-  onChange: function() {
-    this.setState({
-      formkey: this.state.formkey+1
-    })
-  },
-
-  componentDidUpdate: function() {
-    var form = this.refs.upload.getDOMNode()
-    $(form).fileupload({
-      dataType: 'json',
-      replaceFileInput: false,
-    })
+    return { url: 'loading' }
   },
 
   mixins: [{
@@ -44,6 +28,10 @@ module.exports = React.createClass({
   getBackboneModels: function() {
     return [this.props.cards];
   },
+
+  imageHandler: function(e, data) {
+    console.log(data.result.name)
+  },
   
   render: function() {
 
@@ -56,9 +44,14 @@ module.exports = React.createClass({
       main = (<h1>Extraliv!!</h1>)
     }
 
+    if( this.state.url == 'detail' ) {
+      var card = this.props.cards.where({ id: })
+      main = (<CardDetailComponent )
+    }
+
     return (
       <div id="site">
-        <input key={this.state.formkey} id="fileupload" type="file" name="file" data-url="/upload" ref="upload" onChange={this.onChange} />
+        <UploadComponent handler={this.imageHandler} />
         <div className={this.state.url}>
           <div className="menu">
             <a href="#">Home</a><a href="#1up">1up</a>

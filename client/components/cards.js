@@ -1,4 +1,5 @@
 /** @jsx React.DOM */
+
 var React = require('react')
 var CardComponent = require('../components/card')
 var $ = require('jquery')
@@ -24,14 +25,6 @@ module.exports = React.createClass({
 
   componentWillUnmount: function() {
     $(window).off('resize', $(window).data('resizeHandler'))
-  },
-
-  componentDidUpdate: function() {
-    /*
-    this.props.cards.forEach(function(card) {
-      card.save()
-    })
-    */
   },
 
   resizeHandler: function() {

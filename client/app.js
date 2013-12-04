@@ -4,6 +4,7 @@ var React = require('react')
 var AppComponent = require('./components/app')
 var CardCollection = require('./collections/cards')
 var Lipsum = require('./lib/aino/lipsum')
+var Router = require('./router')
 
 Backbone.$ = $
 
@@ -14,6 +15,7 @@ var cards = new CardCollection()
 
 for (var j=0; j<2; j++) {
   cards.push({
+    slug: Math.floor(Math.random()*12345),
     title: Lipsum.words(2,5,true),
     summary: Lipsum.sentences(10, 20)
   })
@@ -31,16 +33,7 @@ cards.on('add change remove', function() {
 React.renderComponent(App, document.body)
 
 // start router
-var Router = Backbone.Router.extend({
-  routes: {
-    "": "home",
-    "1up": "1up"
-  }
-})
-
-var dispatch = new Router()
-
-dispatch.on('route', function(url) {
+Router.on('route', function(url) {
   // set state on App
   App.setState({ url: url })
 })
