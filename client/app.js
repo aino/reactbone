@@ -25,7 +25,7 @@ var App = AppComponent({
 });
 
 cards.on('add change remove', function() {
-  console.log('EDIT', arguments)
+  //console.log('EDIT', arguments)
 })
 
 React.renderComponent(App, document.body)

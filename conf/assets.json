@@ -12,12 +12,10 @@
     , {"name": "underscore.string", "manifest": "package.json"}
     , {"name": "backbone", "manifest": "package.json"}
     , {"name": "react", "noParse": true}
+    , {"name": "jquery.ui.widget", "modulesDir": "lib", "src": "lib/jquery.ui.widget.js"}
   ],
   "libsMeta": {
       "name": "libs"
     , "dest": "libs.bundle.js"
-  },
-  "styles": [
-      "../lib/medium-editor/dist/css/medium-editor.css"
-  ]
+  }
 }

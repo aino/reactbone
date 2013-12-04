@@ -2,33 +2,28 @@
 
 var React = require('react')
 var CardsComponent = require('./cards')
-var Forms = require('../lib/aino/form')
 var $ = require('jquery')
+
+require('../lib/fileupload/jquery.fileupload')
 
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return { url: 'loading' }
+    return { url: 'loading', formkey: 0 }
   },
 
-  componentDidMount: function() {
-    var form = this.refs.uploadform.getDOMNode()
-    var status;
+  onChange: function() {
+    this.setState({
+      formkey: this.state.formkey+1
+    })
+  },
 
-    $(form).ajaxForm({
-      beforeSend: function() {
-        status = 0
-      },
-      uploadProgress: function(event, position, total, percentComplete) {
-        console.log(percentComplete)
-      },
-      success: function() {
-        console.log('READY')
-      },
-      complete: function(xhr) {
-        console.log(xhr)
-      }
-    }); 
+  componentDidUpdate: function() {
+    var form = this.refs.upload.getDOMNode()
+    $(form).fileupload({
+      dataType: 'json',
+      replaceFileInput: false,
+    })
   },
 
   mixins: [{
@@ -63,10 +58,7 @@ module.exports = React.createClass({
 
     return (
       <div id="site">
-        <form method="post" ref="uploadform" encType="multipart/form-data" action="/upload">
-            <input type="file" name="file"/>
-            <input type="submit" value="Submit"/>
-        </form>
+        <input key={this.state.formkey} id="fileupload" type="file" name="file" data-url="/upload" ref="upload" onChange={this.onChange} />
         <div className={this.state.url}>
           <div className="menu">
             <a href="#">Home</a><a href="#1up">1up</a>

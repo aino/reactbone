@@ -3,7 +3,6 @@
 var React = require('react')
 var $ = require('jquery')
 var ChangeListener = require('../lib/aino/changelistener')
-var MediumEditor = require('../lib/medium-editor/dist/js/medium-editor')
 
 module.exports = React.createClass({
 
@@ -31,6 +30,8 @@ module.exports = React.createClass({
 
     var contentNode = $(li).find('p')[0]
 
+    /*
+
     ChangeListener( contentNode, function(content) {
       this.props.card.set({
         content: content
@@ -39,7 +40,9 @@ module.exports = React.createClass({
       return this.innerHTML
     })
 
-    var editor = new MediumEditor([contentNode]);
+    */
+
+    //var editor = new MediumEditor([contentNode]);
 
   },
 
