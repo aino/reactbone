@@ -14,7 +14,11 @@ app.engine( 'html', hoganExpress )
 
 //
 // Middleware
-app.use( express.bodyParser() )
+app.use( express.bodyParser({
+	uploadDir: __dirname + '/tmp',
+	keepExtensions: true
+}))
+
 app.use( express.compress() )
 app.use( '/public', express.static(path.join(__dirname, '..', 'public')) )
 app.use( m.bundles )
@@ -23,7 +27,7 @@ app.use( express.errorHandler() )
 //
 // Routes
 app.get( '/', r.index)
-
+app.post( '/upload', r.upload )
 
 var server = http.createServer( app )
 server.listen( config.port, function() {

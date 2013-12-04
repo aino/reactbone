@@ -10,3 +10,4 @@ node_modules
 bower_components
 public/build/*
 !public/build/.placeholder
+public/i/uploads/*
