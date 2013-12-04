@@ -5,7 +5,7 @@ var Router = require('../router')
 
 module.exports = React.createClass({
 
-  componentDidMount: function(li) {
+  componentDidMount: function() {
     if ( this.props.masonry )
       this.props.masonry.layout()
   },
@@ -16,7 +16,7 @@ module.exports = React.createClass({
   },
 
   clickHandler: function() {
-    Router.navigate('/detail/' + this.props.card.get('slug'))
+    Router.navigate('/detail/' + this.props.card.get('slug'), {trigger: true})
   },
 
   render: function() {

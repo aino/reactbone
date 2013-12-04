@@ -17,7 +17,8 @@ for (var j=0; j<2; j++) {
   cards.push({
     slug: Math.floor(Math.random()*12345),
     title: Lipsum.words(2,5,true),
-    summary: Lipsum.sentences(10, 20)
+    summary: Lipsum.sentences(10, 20),
+    content: Lipsum.paragraphs(50,80)
   })
 }
 
@@ -33,9 +34,13 @@ cards.on('add change remove', function() {
 React.renderComponent(App, document.body)
 
 // start router
-Router.on('route', function(url) {
+Router.on('route', function(url, params) {
+
   // set state on App
-  App.setState({ url: url })
+  App.setState({ 
+    url: url, 
+    urlParams: params || [] 
+  })
 })
 
 Backbone.history.start()

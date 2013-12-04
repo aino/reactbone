@@ -2,12 +2,13 @@
 
 var React = require('react')
 var CardsComponent = require('./cards')
+var CardDetailComponent = require('./card_detail')
 var UploadComponent = require('./fileupload')
 
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return { url: 'loading' }
+    return { url: 'loading', urlParams: [] }
   },
 
   mixins: [{
@@ -40,13 +41,12 @@ module.exports = React.createClass({
       cards: this.props.cards
     })
 
-    if ( this.state.url == '1up' ) {
-      main = (<h1>Extraliv!!</h1>)
-    }
-
-    if( this.state.url == 'detail' ) {
-      var card = this.props.cards.where({ id: })
-      main = (<CardDetailComponent )
+    if ( this.state.url == 'detail' ) {
+      var card = this.props.cards.findWhere({ 
+        slug: parseInt(this.state.urlParams[0], 10)
+      })
+      if ( card )
+        main = (<CardDetailComponent card={card} />)
     }
 
     return (
@@ -54,7 +54,7 @@ module.exports = React.createClass({
         <UploadComponent handler={this.imageHandler} />
         <div className={this.state.url}>
           <div className="menu">
-            <a href="#">Home</a><a href="#1up">1up</a>
+            <a href="#">Home</a>
           </div>
           {main}
         </div>

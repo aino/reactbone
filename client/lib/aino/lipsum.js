@@ -74,7 +74,7 @@
         return ''
 
       if ( min < 8 )
-        return Lipsum.sentence( min )
+        return this.sentences( min )
 
       if ( typeof max == 'number' )
         min = range(min, max)
@@ -84,10 +84,10 @@
       var text = ''
 
       while( sentences-- )
-        text += this.sentence( 8 ) + ' '
+        text += this.sentences( 8 ) + ' '
 
       if ( rest )
-        return text + this.sentence(rest)
+        return text + this.sentences(rest)
       else
         return text.substr(0, text.length-2)
     }
