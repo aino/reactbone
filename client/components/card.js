@@ -5,9 +5,10 @@ var Router = require('../router')
 
 module.exports = React.createClass({
 
-  componentDidMount: function() {
-    if ( this.props.masonry )
-      this.props.masonry.layout()
+  componentDidMount: function(elem) {
+    if ( this.props.masonry ) {
+      this.props.masonry.refresh(elem.parentNode)
+    }
   },
 
   componentDidUpdate: function() {

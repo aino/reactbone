@@ -13,9 +13,9 @@ var cards = new CardCollection()
 
 // make dummy cards
 
-for (var j=0; j<2; j++) {
+for (var j=0; j<20; j++) {
   cards.push({
-    slug: Math.floor(Math.random()*12345),
+    slug: j,
     title: Lipsum.words(2,5,true),
     summary: Lipsum.sentences(10, 20),
     content: Lipsum.paragraphs(50,80)

@@ -74,10 +74,18 @@
       $elem.height( mH )
     }
 
+    var refresh = function(elem) {
+      if ( elem && !$(elem).data('masonry') ) {
+        $elem = $(elem).data('masonry', true)
+      }
+      layout()
+    }
+
     var api = {
       layout: layout,
       options: options,
-      element: elem
+      element: elem,
+      refresh: refresh
     }
 
     $elem.data('api', api)

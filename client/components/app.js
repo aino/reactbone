@@ -4,6 +4,7 @@ var React = require('react')
 var CardsComponent = require('./cards')
 var CardDetailComponent = require('./card_detail')
 var UploadComponent = require('./fileupload')
+var Router = require('../router')
 
 module.exports = React.createClass({
 
@@ -33,6 +34,10 @@ module.exports = React.createClass({
   imageHandler: function(e, data) {
     console.log(data.result.name)
   },
+
+  backdropHandler: function() {
+    Router.navigate('/', {trigger:true})
+  },
   
   render: function() {
 
@@ -41,12 +46,27 @@ module.exports = React.createClass({
       cards: this.props.cards
     })
 
+    var modalContent
+    var modal
+    var backdrop
+
     if ( this.state.url == 'detail' ) {
       var card = this.props.cards.findWhere({ 
         slug: parseInt(this.state.urlParams[0], 10)
       })
       if ( card )
-        main = (<CardDetailComponent card={card} />)
+        modalContent = (<CardDetailComponent card={card} />)
+    }
+
+    if ( modalContent ) {
+      modal = (
+        <div id="modal">
+          <div id="modal-content">
+            {modalContent}
+          </div>
+        </div>
+      )
+      backdrop = <div id="backdrop" onClick={this.backdropHandler}></div>
     }
 
     return (
@@ -58,6 +78,8 @@ module.exports = React.createClass({
           </div>
           {main}
         </div>
+        {modal}
+        {backdrop}
       </div>
     )
   }
