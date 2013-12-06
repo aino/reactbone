@@ -7,10 +7,10 @@ module.exports = React.createClass({
   render: function() {
     var card = this.props.card
     return(
-      <div>
+      <div className="card-detail">
         <p dangerouslySetInnerHTML={{__html: card.get('content')}}></p>
       </div>
     )
   }
-  
+
 })

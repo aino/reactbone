@@ -3,7 +3,8 @@ var Backbone = require('backbone')
 var Router = Backbone.Router.extend({
   routes: {
     "": "home",
-    "detail/:id": "detail"
+    "detail/:id": "detail",
+    "create": "create"
   }
 })
 

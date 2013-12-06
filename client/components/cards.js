@@ -34,13 +34,20 @@ module.exports = React.createClass({
   render: function() {
     var scope = this
 
-    var cards = this.props.cards.map(function(card, index) {
-      return CardComponent({ 
+    cards = [CardComponent({
+      action: '/create',
+      label: '+ Creat new',
+      key: 'create'
+    })]
+
+    this.props.cards.forEach(function(card) {
+      cards.push(CardComponent({ 
         card: card, 
         key: card.cid, 
         masonry: masonry
-      })
+      }))
     })
+
     return (<ul ref="ul">{cards}</ul>)
   }
 })

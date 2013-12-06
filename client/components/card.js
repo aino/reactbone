@@ -16,15 +16,29 @@ module.exports = React.createClass({
       this.props.masonry.layout()
   },
 
-  clickHandler: function() {
+  openHandler: function() {
     Router.navigate('/detail/' + this.props.card.get('slug'), {trigger: true})
   },
 
+  actionHandler: function() {
+    Router.navigate(this.props.action, {trigger: true})
+  },
+
   render: function() {
-    var card = this.props.card
+    
+    var card
+    var handler
+
+    if ( this.props.card ) {
+      card = <p dangerouslySetInnerHTML={{__html: this.props.card.get('content')}}></p>
+      handler = this.openHandler
+    } else if ( this.props.action ) {
+      card = <p>{this.props.label}</p>
+      handler = this.actionHandler
+    }
     return(
-      <li onClick={this.clickHandler}>
-        <p dangerouslySetInnerHTML={{__html: card.get('summary')}}></p>
+      <li onClick={handler}>
+        {card}
       </li>
     )
   }

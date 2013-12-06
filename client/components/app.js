@@ -3,6 +3,7 @@
 var React = require('react')
 var CardsComponent = require('./cards')
 var CardDetailComponent = require('./card_detail')
+var CardEditComponent = require('./card_edit')
 var UploadComponent = require('./fileupload')
 var Router = require('../router')
 
@@ -55,7 +56,13 @@ module.exports = React.createClass({
         slug: parseInt(this.state.urlParams[0], 10)
       })
       if ( card )
-        modalContent = (<CardDetailComponent card={card} />)
+        modalContent = <CardDetailComponent card={card} />
+    }
+    if ( this.state.url == 'create' ) {
+      modalContent = CardEditComponent({
+        isnew: true,
+        cards: this.props.cards
+      })
     }
 
     if ( modalContent ) {

@@ -13,6 +13,8 @@ var cards = new CardCollection()
 
 // make dummy cards
 
+/*
+
 for (var j=0; j<20; j++) {
   cards.push({
     slug: j,
@@ -21,6 +23,8 @@ for (var j=0; j<20; j++) {
     content: Lipsum.paragraphs(50,80)
   })
 }
+
+*/
 
 // create the top-level react app
 var App = AppComponent({
@@ -45,10 +49,3 @@ Router.on('route', function(url, params) {
 
 Backbone.history.start()
 
-// backbone test
-setTimeout(function() {
-  cards.at(0).set('title', '2 SECOND HAS PASSED MUTHERFUCKER!! HELL YEA BRING DA NOIZE')
-  setTimeout(function() {
-    cards.at(1).set('title', '10 SECONDS HAS PASSED')
-  },8000)
-},2000)
