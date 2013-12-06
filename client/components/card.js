@@ -24,13 +24,23 @@ module.exports = React.createClass({
     Router.navigate(this.props.action, {trigger: true})
   },
 
+  editHandler: function(e) {
+    e.stopPropagation()
+    Router.navigate('/create/'+this.props.card.get('slug'), {trigger:true})
+  },
+
   render: function() {
     
     var card
     var handler
 
     if ( this.props.card ) {
-      card = <p dangerouslySetInnerHTML={{__html: this.props.card.get('content')}}></p>
+      card = (
+        <div>
+          <div dangerouslySetInnerHTML={{__html: this.props.card.get('content')}}></div>
+          <button onClick={this.editHandler}>Edit</button>
+        </div>
+      )
       handler = this.openHandler
     } else if ( this.props.action ) {
       card = <p>{this.props.label}</p>

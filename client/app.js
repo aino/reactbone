@@ -10,6 +10,7 @@ Backbone.$ = $
 
 // initialize cards
 var cards = new CardCollection()
+cards.fetch()
 
 // make dummy cards
 

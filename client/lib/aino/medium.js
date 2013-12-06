@@ -106,7 +106,7 @@
     if (!this.options.disableToolbar)
        this.initToolbar().bindButtons().bindAnchorForm()
 
-    this.bindSelect().bindPaste().setPlaceholders().bindWindowActions()
+    this.bindSelect().bindPaste().bindWindowActions()
 
     this.$element.data('medium', this)
 
@@ -114,8 +114,13 @@
     this.cache = this.element.innerHTML
     this.callbacks = []
 
+    var checkPlaceholder = function() {
+      self.$element.toggleClass(prefix+'placeholder', !self.$element.text())
+    }
+
     this.$element.focus(function() {
       self.interval = setInterval(function() {
+        checkPlaceholder()
         if ( self.cache != self.element.innerHTML ) {
           $.each(self.callbacks, function(i, fn) {
             fn.call(self, self.element.innerHTML)
@@ -124,9 +129,12 @@
         }
       }, 20)
     }).blur(function() {
-      clearInterval(self.interval)
+      checkPlaceholder()
+      self.$element.toggleClass(prefix+'placeholder', !self.$element.text())
     })
     
+    checkPlaceholder()
+
     return this
 
   }
@@ -139,6 +147,12 @@
       this.callbacks.push(fn)
     },
 
+    setContent: function(html) {
+      if ( html )
+        this.cache = html
+        this.$element.html(html).removeClass(prefix+'placeholder')
+    },
+
     bindParagraphCreation: function () {
       var self = this
       this.$element.on('keyup', function (e) {
@@ -147,7 +161,6 @@
         var tagName
 
         if ( $node.is('pre') ) {
-          console.log('PRE')
           return false
         }
         
@@ -557,22 +570,7 @@
         }
       }
     }
-    this.$element.on('paste', pasteWrapper)
-    return this
-  },
-
-  setPlaceholders: function() {
-    var $element = this.$element
-    var activatePlaceholder = function() {
-      $element.toggleClass(prefix+'placeholder', !$.trim($element.text()))
-    }
-    var placeholderWrapper = function (e) {
-      $(this).removeClass(prefix+'placeholder')
-      if (e.type !== 'keypress')
-        activatePlaceholder()
-    }
-    activatePlaceholder()
-    this.$element.on('blur keypress', placeholderWrapper)
+    //this.element.addEventListener('paste', pasteWrapper)
     return this
   }
 }

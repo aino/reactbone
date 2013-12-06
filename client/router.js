@@ -4,7 +4,8 @@ var Router = Backbone.Router.extend({
   routes: {
     "": "home",
     "detail/:id": "detail",
-    "create": "create"
+    "create": "create",
+    "create/:id": "create"
   }
 })
 

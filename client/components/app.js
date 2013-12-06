@@ -6,6 +6,8 @@ var CardDetailComponent = require('./card_detail')
 var CardEditComponent = require('./card_edit')
 var UploadComponent = require('./fileupload')
 var Router = require('../router')
+var Backbone = require('backbone')
+var _ = require('underscore')
 
 module.exports = React.createClass({
 
@@ -39,6 +41,13 @@ module.exports = React.createClass({
   backdropHandler: function() {
     Router.navigate('/', {trigger:true})
   },
+
+  reset: function() {
+    var len = this.props.cards.size()
+    while(len--) {
+      this.props.cards.at(len).destroy()
+    }
+  },
   
   render: function() {
 
@@ -51,17 +60,23 @@ module.exports = React.createClass({
     var modal
     var backdrop
 
-    if ( this.state.url == 'detail' ) {
-      var card = this.props.cards.findWhere({ 
-        slug: parseInt(this.state.urlParams[0], 10)
-      })
-      if ( card )
-        modalContent = <CardDetailComponent card={card} />
+    var card = this.props.cards.findWhere({ 
+      slug: this.state.urlParams[0]
+    })
+
+    if ( this.state.url == 'detail' && card ) {
+      modalContent = <CardDetailComponent card={card} />
     }
+
+    console.log(this.state.url)
+
     if ( this.state.url == 'create' ) {
+
+      console.log('create', card)
+      
       modalContent = CardEditComponent({
-        isnew: true,
-        cards: this.props.cards
+        cards: this.props.cards,
+        card: card
       })
     }
 
@@ -78,7 +93,7 @@ module.exports = React.createClass({
 
     return (
       <div id="site">
-        <UploadComponent handler={this.imageHandler} />
+        <button onClick={this.reset}>Reset</button>
         <div className={this.state.url}>
           <div className="menu">
             <a href="#">Home</a>
