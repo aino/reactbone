@@ -4,7 +4,7 @@
  */
 
 !function(a,i,n,o){o=i.length&&typeof require=="function"?function(e,t,n){n=[];for(t=0;t<i.length;t++){n.push(require(i[t]))}return e.apply(null,n)}(n):n();if(typeof module=="object"){module.exports=o}else if(typeof define=="function"){define(a,i,n())}else{this[a]=o}}.call
-(this, 'Medium', ['jquery'], function($) {
+(this, 'Medium', ['jquery','rangy'], function($, rangy) {
 
   var document = window.document
 
@@ -106,7 +106,9 @@
     if (!this.options.disableToolbar)
        this.initToolbar().bindButtons().bindAnchorForm()
 
-    this.bindSelect().bindPaste().bindWindowActions()
+    this.bindSelect().bindWindowActions()
+
+    this.element.onpaste = this.onPaste.bind(this)
 
     this.$element.data('medium', this)
 
@@ -120,17 +122,20 @@
 
     this.$element.focus(function() {
       self.interval = setInterval(function() {
+
         checkPlaceholder()
-        if ( self.cache != self.element.innerHTML ) {
+
+        var html = self.$element.html()
+
+        if ( self.cache != html ) {
           $.each(self.callbacks, function(i, fn) {
-            fn.call(self, self.element.innerHTML)
+            fn.call(self, html)
           })
-          self.cache = self.element.innerHTML
+          self.cache = html
         }
       }, 20)
     }).blur(function() {
       checkPlaceholder()
-      self.$element.toggleClass(prefix+'placeholder', !self.$element.text())
     })
     
     checkPlaceholder()
@@ -148,9 +153,11 @@
     },
 
     setContent: function(html) {
-      if ( html )
+      if ( html ) {
         this.cache = html
-        this.$element.html(html).removeClass(prefix+'placeholder')
+        this.$element.removeClass(prefix+'placeholder')
+        this.element.innerHTML = html
+      }
     },
 
     bindParagraphCreation: function () {
@@ -545,33 +552,40 @@
     return this
   },
 
-  bindPaste: function () {
-    if (!this.options.forcePlainText)
-      return this
+  sanitize: function(html) {
+    return html;
+  },
 
-    var self = this
-    var pasteWrapper = function (e) {
-      var paragraphs
-      var html = ''
-      var p = 0
-      $(this).removeClass(prefix+'placeholder')
-      if (e.clipboardData && e.clipboardData.getData) {
-        e.preventDefault()
-        if (!self.options.disableReturn) {
-          paragraphs = e.clipboardData.getData('text/plain').split(/[\r\n]/g)
-          for (; p < paragraphs.length; p++) {
-            if (paragraphs[p] !== "")
-              html += '<p>' + paragraphs[p] + '</p>'
-  
-          }
-          document.execCommand('insertHTML', false, html)
-        } else {
-          document.execCommand('insertHTML', false, e.clipboardData.getData('text/plain'))
-        }
-      }
+  onPaste: function(e) {
+
+    e.preventDefault()
+    var clipboard, content
+
+    var clean = function(text) {
+
+      var div = document.createElement('div')
+      div.innerHTML = text;
+
+      var parsed = div.innerText || div.textContent
+
+      var arr = parsed.split(/[\r\n]/g)
+      arr = arr.map(function(line) {
+        return $.trim(line)
+      })
+      return arr.join('<br>')
+        .replace('<br><br>','</p><p>')
+        .replace('<br></p>','</p>')
+        .replace('<p><br>','<p>')
     }
-    //this.element.addEventListener('paste', pasteWrapper)
-    return this
+
+    if (e.clipboardData) {
+      clipboard = (e.originalEvent || e).clipboardData
+      content = clipboard.getData('text/plain') || clipboard.getData('text/html')
+      document.execCommand('insertHTML', false, clean(content))
+    } else if (window.clipboardData) {
+      content = window.clipboardData.getData('Text')
+      document.selection.createRange().pasteHTML(clean(content))
+    }
   }
 }
 

@@ -3,7 +3,8 @@
 var React = require('react')
 var $ = require('jquery')
 var Medium = require('../lib/aino/medium')
-var Sanitizer = require('../lib/aino/sanitizer')
+var UploadComponent = require('./fileupload')
+var Rangy = require('rangy')
 
 var interval;
 
@@ -20,7 +21,8 @@ module.exports = React.createClass({
 
     var self = this
 
-    $(elem).find('.editable').each(function() {
+    $(elem).find('.editable').each(function(i) {
+
       var m = Medium(this)
       if ( card.get('content') ) {
         m.setContent(card.get('content'))
@@ -29,6 +31,18 @@ module.exports = React.createClass({
       m.change(function(html) {
         self.changeHandler.call(self, elem, card, html)
       })
+
+      if (!i) {
+        
+        $(elem).focus()
+
+        var range = rangy.createRange()
+        range.selectNodeContents(elem)
+        range.collapse(false)
+        var sel = rangy.getSelection()
+        sel.removeAllRanges()
+        sel.addRange(range)
+      }
     })
 
     interval = setInterval(function() {
@@ -40,25 +54,18 @@ module.exports = React.createClass({
 
   },
 
+  uploadHandler: function(img, data) {
+    var image = new Image()
+    image.src = '/public/i/uploads/'+data.result.name
+    console.log(this.refs.image)
+    this.refs.image.getDOMNode().appendChild(image)
+  },
+
   componentWillUnmount: function() {
     clearInterval(interval)
   },
 
   changeHandler: function(elem, card, html) {
-    var cleaner = new Sanitizer({ 
-      elements:   ['a', 'b', 'i', 'h3', 'h4', 'blockquote', 'ul', 'li', 'pre'],
-      attributes: { 
-        a: ['href'], 
-        span: ['class'] 
-      },
-      protocols:  { 
-        a: { href: ['http', 'https', 'mailto'] }
-      }
-    })
-    var fragment = cleaner.clean_node(elem)
-    elem.innerHTML = ''
-    elem.appendChild(fragment)
-    html = elem.innerHTML
 
     card.set({
       content: html
@@ -70,6 +77,8 @@ module.exports = React.createClass({
   render: function() {
     return(
       <div className="card-detail card-edit">
+        <div className="image" ref="image"></div>
+        <UploadComponent handler={this.uploadHandler} />
         <div className="editable"></div>
       </div>
     )

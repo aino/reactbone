@@ -14,6 +14,7 @@
     , {"name": "react", "noParse": true}
     , {"name": "Backbone.localStorage", "manifest": "package.json"}
     , {"name": "jquery.ui.widget", "modulesDir": "lib", "src": "lib/jquery.ui.widget.js"}
+    , {"name": "rangy", "modulesDir": "lib", "src": "lib/rangy/core-saverestore.js"}
   ],
   "libsMeta": {
       "name": "libs"

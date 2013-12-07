@@ -68,11 +68,7 @@ module.exports = React.createClass({
       modalContent = <CardDetailComponent card={card} />
     }
 
-    console.log(this.state.url)
-
     if ( this.state.url == 'create' ) {
-
-      console.log('create', card)
       
       modalContent = CardEditComponent({
         cards: this.props.cards,
