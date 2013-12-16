@@ -1,0 +1,32 @@
+
+@font-face{
+font-family:"Effra";
+src:url("bf129681-00b0-4e8b-afb9-03a5b3673b2e.eot?#iefix");
+src:url("bf129681-00b0-4e8b-afb9-03a5b3673b2e.eot?#iefix") format("eot"),url("d9c686bd-1b2c-4730-a0b4-9376d5cc0217.woff") format("woff"),url("f6eb1dc4-bd7a-4ec7-8efa-af82ddea3829.ttf") format("truetype"),url("51807340-4baf-41b5-a341-d06a17d6442a.svg#51807340-4baf-41b5-a341-d06a17d6442a") format("svg");
+font-weight: 700; /* bold */
+}
+@font-face{
+font-family:"Effra";
+src:url("ff5f1259-da68-46f8-965f-c1ae7824db07.eot?#iefix");
+src:url("ff5f1259-da68-46f8-965f-c1ae7824db07.eot?#iefix") format("eot"),url("e5b435a1-c0b6-4c96-9bb9-f24fde8b91b0.woff") format("woff"),url("ec4f879c-31d8-42e7-abdd-4001d75d1c65.ttf") format("truetype"),url("d08e1f2f-3048-42b0-abae-ab58020fa467.svg#d08e1f2f-3048-42b0-abae-ab58020fa467") format("svg");
+font-weight: 900; /*heavy */
+}
+@font-face{
+font-family:"Effra";
+src:url("b7efdc09-493c-4ece-9318-858f00453c42.eot?#iefix");
+src:url("b7efdc09-493c-4ece-9318-858f00453c42.eot?#iefix") format("eot"),url("751064cf-4abc-41a8-824e-4eaed9b85d23.woff") format("woff"),url("5f22f65c-93cb-4f49-98f1-9cdcddbe0f49.ttf") format("truetype"),url("edad0b27-2a7f-4689-a93e-893192afa06d.svg#edad0b27-2a7f-4689-a93e-893192afa06d") format("svg");
+font-weight: 300; /* light */
+}
+@font-face{
+font-family:"Effra";
+src:url("22d5253a-df89-458b-b414-0191063f0b7f.eot?#iefix");
+src:url("22d5253a-df89-458b-b414-0191063f0b7f.eot?#iefix") format("eot"),url("07f98c09-a3b5-4ab3-a35e-9d9474d19279.woff") format("woff"),url("c95fc487-48ab-48c1-b4da-f9478f900fdb.ttf") format("truetype"),url("7edd076c-820b-4d62-8cda-94cbed70c375.svg#7edd076c-820b-4d62-8cda-94cbed70c375") format("svg");
+font-weight: 400; /* book */
+}
+@font-face{
+font-family:"Effra";
+src:url("6a34d279-871d-48bb-9c56-c74409b89853.eot?#iefix");
+src:url("6a34d279-871d-48bb-9c56-c74409b89853.eot?#iefix") format("eot"),url("f81cab36-9cc4-49ac-a2f0-2e7e8f838ca7.woff") format("woff"),url("da12cdd8-93ef-4ca3-a27e-d029e1a339fe.ttf") format("truetype"),url("07cbc46a-43da-4e3f-9147-ede3584d5103.svg#07cbc46a-43da-4e3f-9147-ede3584d5103") format("svg");
+font-weight: 500; /* medium */
+}
+

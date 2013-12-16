@@ -4,7 +4,7 @@
  */
 
 !function(a,i,n,o){o=i.length&&typeof require=="function"?function(e,t,n){n=[];for(t=0;t<i.length;t++){n.push(require(i[t]))}return e.apply(null,n)}(n):n();if(typeof module=="object"){module.exports=o}else if(typeof define=="function"){define(a,i,n())}else{this[a]=o}}.call
-(this, 'Medium', ['jquery','rangy'], function($, rangy) {
+(this, 'Medium', ['jquery'], function($) {
 
   var document = window.document
 
@@ -77,7 +77,7 @@
     if (this.$element.data('medium'))
       return this.$element.data('medium')
 
-    this.options = $.extend(options, {
+    this.options = $.extend({
       anchorInputPlaceholder: 'Paste or type a link',
       delay: 0,
       diffLeft: 0,
@@ -85,12 +85,12 @@
       disableReturn: false,
       disableToolbar: false,
       firstHeader: 'h3',
-      forcePlainText: true,
       allowMultiParagraphSelection: true,
       placeholder: 'Type your text',
       secondHeader: 'h4',
+      plainText: false,
       buttons: ['bold', 'italic', 'anchor', 'header1', 'header2', 'quote', 'unorderedlist', 'pre']
-    })
+    }, options)
 
     this.isActive = true
     this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre']
@@ -101,7 +101,10 @@
       'data-medium-element': 'true'
     })
 
-    this.bindParagraphCreation().bindReturn().bindTab()
+    if(!this.options.plainText)
+      this.bindParagraphCreation()
+
+    this.bindReturn().bindTab()
 
     if (!this.options.disableToolbar)
        this.initToolbar().bindButtons().bindAnchorForm()
@@ -133,7 +136,7 @@
           })
           self.cache = html
         }
-      }, 20)
+      }, 10)
     }).blur(function() {
       checkPlaceholder()
     })

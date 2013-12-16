@@ -12,7 +12,7 @@ module.exports = React.createClass({
   componentDidMount: function(ul) {
     if ( !masonry ) {
       masonry = new Masonry(ul, {
-        width: 164,
+        width: 192,
         gutter: 12
       })
     }
@@ -33,21 +33,18 @@ module.exports = React.createClass({
 
   render: function() {
     var scope = this
-
-    cards = [CardComponent({
-      action: '/create',
-      label: '+ Creat new',
-      key: 'create'
-    })]
+    var cards = []
 
     this.props.cards.forEach(function(card) {
-      cards.push(CardComponent({ 
-        card: card, 
-        key: card.cid, 
-        masonry: masonry
-      }))
+      if ( !card.isEmpty() ) {
+        cards.push(CardComponent({ 
+          card: card, 
+          key: card.cid, 
+          masonry: masonry
+        }))
+      }
     })
 
-    return (<ul ref="ul">{cards}</ul>)
+    return (<ul className="cards">{cards}</ul>)
   }
 })

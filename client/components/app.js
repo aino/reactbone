@@ -3,7 +3,6 @@
 var React = require('react')
 var CardsComponent = require('./cards')
 var CardDetailComponent = require('./card_detail')
-var CardEditComponent = require('./card_edit')
 var UploadComponent = require('./fileupload')
 var Router = require('../router')
 var Backbone = require('backbone')
@@ -34,19 +33,19 @@ module.exports = React.createClass({
     return [this.props.cards];
   },
 
-  imageHandler: function(e, data) {
-    console.log(data.result.name)
-  },
-
-  backdropHandler: function() {
-    Router.navigate('/', {trigger:true})
-  },
-
-  reset: function() {
+  resetAction: function() {
     var len = this.props.cards.size()
     while(len--) {
       this.props.cards.at(len).destroy()
     }
+  },
+
+  createAction: function() {
+    var slug = Date.now().toString()
+    this.props.cards.create({
+      slug: slug
+    })
+    Router.navigate('/detail/'+slug, {trigger:true})
   },
   
   render: function() {
@@ -56,48 +55,22 @@ module.exports = React.createClass({
       cards: this.props.cards
     })
 
-    var modalContent
-    var modal
-    var backdrop
-
     var card = this.props.cards.findWhere({ 
       slug: this.state.urlParams[0]
     })
 
-    if ( this.state.url == 'detail' && card ) {
-      modalContent = <CardDetailComponent card={card} />
-    }
-
-    if ( this.state.url == 'create' ) {
-      
-      modalContent = CardEditComponent({
-        cards: this.props.cards,
-        card: card
-      })
-    }
-
-    if ( modalContent ) {
-      modal = (
-        <div id="modal">
-          <div id="modal-content">
-            {modalContent}
-          </div>
-        </div>
-      )
-      backdrop = <div id="backdrop" onClick={this.backdropHandler}></div>
-    }
+    var detail = this.state.url == 'detail' && card ? <CardDetailComponent card={card} /> : null
 
     return (
       <div id="site">
-        <button onClick={this.reset}>Reset</button>
+        <div className="controls">
+          <button onClick={this.resetAction}>Reset</button>
+          <button onClick={this.createAction}>Create</button>
+        </div>
         <div className={this.state.url}>
-          <div className="menu">
-            <a href="#">Home</a>
-          </div>
           {main}
         </div>
-        {modal}
-        {backdrop}
+        {detail}
       </div>
     )
   }

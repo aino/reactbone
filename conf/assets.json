@@ -11,7 +11,7 @@
     , {"name": "underscore", "manifest": "package.json"}
     , {"name": "underscore.string", "manifest": "package.json"}
     , {"name": "backbone", "manifest": "package.json"}
-    , {"name": "react", "noParse": true}
+    , {"name": "react", "src": "../bower_components/react/react-with-addons.js", "noParse": true}
     , {"name": "Backbone.localStorage", "manifest": "package.json"}
     , {"name": "jquery.ui.widget", "modulesDir": "lib", "src": "lib/jquery.ui.widget.js"}
     , {"name": "rangy", "modulesDir": "lib", "src": "lib/rangy/core-saverestore.js"}

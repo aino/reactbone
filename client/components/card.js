@@ -20,35 +20,25 @@ module.exports = React.createClass({
     Router.navigate('/detail/' + this.props.card.get('slug'), {trigger: true})
   },
 
-  actionHandler: function() {
-    Router.navigate(this.props.action, {trigger: true})
-  },
-
-  editHandler: function(e) {
-    e.stopPropagation()
-    Router.navigate('/create/'+this.props.card.get('slug'), {trigger:true})
-  },
-
   render: function() {
     
-    var card
-    var handler
+    var src = this.props.card.get('image')
+    var img
 
-    if ( this.props.card ) {
-      card = (
-        <div>
-          <div dangerouslySetInnerHTML={{__html: this.props.card.get('content')}}></div>
-          <button onClick={this.editHandler}>Edit</button>
+    if (src) {
+      src = '/public/i/uploads/320/' + src
+      img = (
+        <div className="image">
+          <img src={src} width="192" height={this.props.card.get('imageratio')*192} />
         </div>
       )
-      handler = this.openHandler
-    } else if ( this.props.action ) {
-      card = <p>{this.props.label}</p>
-      handler = this.actionHandler
     }
     return(
-      <li onClick={handler}>
-        {card}
+      <li onClick={this.openHandler}>
+        <div>
+          {img}
+          <div className="summary" dangerouslySetInnerHTML={{__html: this.props.card.get('caption')}}></div>
+        </div>
       </li>
     )
   }

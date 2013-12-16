@@ -11,13 +11,17 @@ module.exports = React.createClass({
     return { formkey: 0 }
   },
 
-  componentDidUpdate: function() {
+  componentDidMount: function() {
     var form = this.refs.upload.getDOMNode()
     $(form).fileupload({
       dataType: 'json',
       replaceFileInput: false,
       done: this.props.handler || function(){}
     })
+  },
+
+  componentDidUpdate: function() {
+    this.componentDidMount()
   },
 
   changeHandler: function() {
