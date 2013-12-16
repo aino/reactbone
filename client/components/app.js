@@ -14,6 +14,8 @@ module.exports = React.createClass({
     return { url: 'loading', urlParams: [] }
   },
 
+  /*
+
   mixins: [{
     componentDidMount: function() {
       this.getBackboneModels().forEach(function(model) {
@@ -31,6 +33,18 @@ module.exports = React.createClass({
 
   getBackboneModels: function() {
     return [this.props.cards];
+  },
+
+  */
+
+  componentDidMount: function() {
+    this.props.cards.on('add change remove', function() {
+      this.setProps({ cards: this.props.cards })
+    }, this)
+  },
+
+  componentWillUnmount: function() {
+    this.props.cards.off(null, null, this)
   },
 
   resetAction: function() {
