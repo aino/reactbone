@@ -22,21 +22,21 @@ module.exports = React.createClass({
 
   render: function() {
     
-    var src = this.props.card.get('image')
-    var img
+    var image = this.props.card.get('image')
+    var imageElement, src
 
-    if (src) {
-      src = '/public/i/uploads/320/' + src
-      img = (
+    if (image) {
+      src = '/public/i/uploads/320/' + image.name
+      imageElement = (
         <div className="image">
-          <img src={src} width="192" height={this.props.card.get('imageratio')*192} />
+          <img src={src} width="192" height={image.ratio*192} />
         </div>
       )
     }
     return(
       <li onClick={this.openHandler}>
         <div>
-          {img}
+          {imageElement}
           <div className="summary" dangerouslySetInnerHTML={{__html: this.props.card.get('caption')}}></div>
         </div>
       </li>

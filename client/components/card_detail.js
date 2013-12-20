@@ -7,17 +7,14 @@ var ImageComponent = require('./image')
 var ModalComponent = require('./modal')
 var rangy = require('rangy')
 var Router = require('../router')
+var globals = require('../globals')
 
 var interval;
 
 module.exports = React.createClass({
 
-  getInitialState: function() {
-    return { editing: false }
-  },
-
   componentDidMount: function(elem) {
-    this.componentDidUpdate(elem)
+    this.componentDidUpdate()
   },
 
   componentDidUpdate: function() {
@@ -29,9 +26,21 @@ module.exports = React.createClass({
 
     var self = this
 
+    var $card = $(this.refs.card.getDOMNode())
+    var width = $card.outerWidth()
+    $card.closest('#modal').css({
+      marginLeft: width/-2
+    })
+
+    if ( card.get('captionType') == 'bottom' )
+      $card.css('width', $card.find('img').width())
+
+    if ( !this.refs.caption )
+      return
+
     var elem = this.refs.caption.getDOMNode()
 
-    if ( !this.state.editing ) {
+    if ( !globals.isEditMode() ) {
       elem.innerHTML = card.get('caption')
       return
     }
@@ -98,42 +107,54 @@ module.exports = React.createClass({
   },
 
   closeHandler: function() {
-    if ( this.state.editing )
-      return
     Router.navigate('/', { trigger: true })
   },
 
-  editAction: function() {
-    this.setState({ editing: true })
+  imageHandler: function() {
+    this.componentDidUpdate()
   },
 
-  doneAction: function() {
-    this.setState({ editing: false })
+  selectCaptionAction: function(e) {
+    var val = e.target.value
+    this.props.card.set({
+      captionType: val
+    })
   },
 
   render: function() {
 
     var tools
     var caption
+    var classNames = ['card-detail']
+    var captionType = this.props.card.get('captionType')
 
-    if(this.state.editing) {
-      tools = <button onClick={this.doneAction}>Done</button>
+    if ( captionType )
+      classNames.push('caption-'+captionType)
+
+    if(globals.isEditMode()) {
+      tools = (
+        <div className="card-toolbar">
+          <select onChange={this.selectCaptionAction} value={captionType}>
+            <option value="">No caption</option>
+            <option value="left">Left caption</option>
+            <option value="right">Right caption</option>
+            <option value="bottom">Bottom caption</option>
+          </select>
+        </div>
+      )
       caption = <div key="editable" ref="caption" className="editable content" data-type="caption" />
     } else {
-      tools = <button onClick={this.editAction}>Edit card</button>
       caption = <div key="static" ref="caption" className="content" />
     }
 
     return (
       <ModalComponent closeHandler={this.closeHandler}>
-        <div className='card-detail'>
-          <div className={this.state.editing ? 'active card-toolbar' : 'card-toolbar'}>
-            {tools}
-          </div>
+        <div className={classNames.join(' ')} ref="card">
+          {tools}
+          <ImageComponent onChange={this.imageHandler} className="card-image" card={this.props.card} />
           <div className="card-content">
             {caption}
           </div>
-          <ImageComponent className="card-image" upload={this.state.editing} card={this.props.card} />
         </div>
       </ModalComponent>
     )

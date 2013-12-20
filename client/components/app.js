@@ -7,35 +7,17 @@ var UploadComponent = require('./fileupload')
 var Router = require('../router')
 var Backbone = require('backbone')
 var _ = require('underscore')
+var globals = require('../globals')
 
 module.exports = React.createClass({
 
   getInitialState: function() {
-    return { url: 'loading', urlParams: [] }
-  },
-
-  /*
-
-  mixins: [{
-    componentDidMount: function() {
-      this.getBackboneModels().forEach(function(model) {
-        model.on('add change remove', function() {
-          this.forceUpdate()
-        }, this)
-      }, this)
-    },
-    componentWillUnmount: function() {
-      this.getBackboneModels().forEach(function(model) {
-        model.off(null, null, this)
-      }, this)
+    return { 
+      url: 'loading', 
+      urlParams: [],
+      editMode: globals.editMode
     }
-  }],
-
-  getBackboneModels: function() {
-    return [this.props.cards];
   },
-
-  */
 
   componentDidMount: function() {
     this.props.cards.on('add change remove', function() {
@@ -61,13 +43,18 @@ module.exports = React.createClass({
     })
     Router.navigate('/detail/'+slug, {trigger:true})
   },
+
+  editModeToggle: function() {
+    this.setState({
+      editMode: !this.state.editMode
+    })
+    globals.toggleEditMode()
+  },
   
   render: function() {
 
     // rendering logic based on state goes here
-    var main = CardsComponent({
-      cards: this.props.cards
-    })
+    var main = <CardsComponent cards={this.props.cards} />
 
     var card = this.props.cards.findWhere({ 
       slug: this.state.urlParams[0]
@@ -75,15 +62,22 @@ module.exports = React.createClass({
 
     var detail = this.state.url == 'detail' && card ? <CardDetailComponent card={card} /> : null
 
+    var controls = <button onClick={this.editModeToggle}>Edit mode</button>
+
+    if ( this.state.editMode ) {
+      controls = (
+        <div className="tools">
+          <button onClick={this.resetAction}>Clear</button>
+          <button onClick={this.createAction}>Create</button>
+          <button onClick={this.editModeToggle}>View mode</button>
+        </div>
+      )
+    }
+
     return (
       <div id="site">
-        <div className="controls">
-          <button onClick={this.resetAction}>Reset</button>
-          <button onClick={this.createAction}>Create</button>
-        </div>
-        <div className={this.state.url}>
-          {main}
-        </div>
+        <div className="controls">{controls}</div>
+        <div className={this.state.url}>{main}</div>
         {detail}
       </div>
     )
