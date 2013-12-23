@@ -1,9 +1,11 @@
-body,html{background:#eee;font:16px/1.3 Effra,helvetica,sans-serif;padding:0;margin:0;-webkit-font-smoothing:subpixel-antialiased;}
+body,html{background:#eee;font:16px/1.3 Effra,helvetica,sans-serif;padding:0;margin:0;
+	-webkit-font-smoothing:subpixel-antialiased;padding:0;margin:0;}
 #site ul{overflow:hidden;list-style:none;margin:0 0 0 12px;padding:0;width:100%;}
-#site li{margin: 0 12px 12px 0;background:#fff;width:192px;}
+#site li{margin: 0 12px 12px 0;background:#fff;width:192px;position:relative;}
 #site li >*{font-size:13px;}
-#site li .summary{padding:12px;}
+#site li .summary{color:#444;margin:12px;line-height:20px;font-size:14px;font-weight:200;}
 #site li .image img{display:block;}
+#site li input{position:absolute;top:10px;left:10px;}
 
 #site .image{background:#eee;}
 

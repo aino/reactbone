@@ -6,49 +6,30 @@ var globals = require('../globals')
 
 module.exports = React.createClass({
 
-  getInitialState: function() {
-    return {
-      image: this.props.card ? this.props.card.get('image') : null
-    }
-  },
-
   getDefaultProps: function() {
     return {
       size: 800,
       maxWidth: 800,
-      maxHeight: 600
+      maxHeight: 600,
+      onChange: function(){}
     }
   },
 
-  componentDidUpdate: function() {
-    this.props.onChange && this.props.onChange()
-  },
-
   uploadHandler: function(e, data) {
-
     var imageObj = {
       features: data.result.features,
       name: data.result.name,
       ratio: Math.round((data.result.features.height/data.result.features.width)*1000)/1000
     }
-    
-    this.setState({
-      image: imageObj
-    })
-
-    this.props.card.set({
-      image: imageObj
-    },{ silent: true })
-
-    this.props.card.hasChanged = true
+    this.props.onChange && this.props.onChange(imageObj)
   },
 
 	render: function() {
 
-    var image = this.state.image
+    var image = this.props.image
 		var imageClasses = ['img']
 		var imageElement
-    var upload = globals.isEditMode() ? <UploadComponent handler={this.uploadHandler} /> : null
+    var upload = globals.get('editmode') ? <UploadComponent handler={this.uploadHandler} /> : null
     var width, height, ratio
     var size = this.props.size
 

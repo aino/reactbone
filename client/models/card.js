@@ -6,7 +6,9 @@ module.exports = Backbone.Model.extend({
     captiontype: '',
     slug: '',
     image: null,
-    published: false
+    thumb: null,
+    published: false,
+    summary: ''
   },
   isEmpty: function() {
   	var hasCaption = !!this.get('caption').trim()

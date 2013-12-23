@@ -14,8 +14,7 @@ module.exports = React.createClass({
   getInitialState: function() {
     return { 
       url: 'loading', 
-      urlParams: [],
-      editMode: globals.editMode
+      urlParams: []
     }
   },
 
@@ -45,10 +44,8 @@ module.exports = React.createClass({
   },
 
   editModeToggle: function() {
-    this.setState({
-      editMode: !this.state.editMode
-    })
-    globals.toggleEditMode()
+    globals.set('editmode', !globals.get('editmode'))
+    this.forceUpdate()
   },
   
   render: function() {
@@ -64,7 +61,7 @@ module.exports = React.createClass({
 
     var controls = <button onClick={this.editModeToggle}>Edit mode</button>
 
-    if ( this.state.editMode ) {
+    if ( globals.get('editmode') ) {
       controls = (
         <div className="tools">
           <button onClick={this.resetAction}>Clear</button>

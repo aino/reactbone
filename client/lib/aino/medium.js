@@ -278,6 +278,10 @@
         .addClass(prefix+'toolbar').html( this.toolbarTemplate() ).appendTo( 'body' )
     },
 
+    destroy: function() {
+      $(prefix+'toolbar').remove()
+    },
+
     bindSelect: function () {
       var self = this
       var timer

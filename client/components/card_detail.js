@@ -2,14 +2,12 @@
 
 var React = require('react')
 var $ = require('jquery')
-var Medium = require('../lib/aino/medium')
 var ImageComponent = require('./image')
 var ModalComponent = require('./modal')
-var rangy = require('rangy')
+var EditorComponent = require('./editor')
 var Router = require('../router')
 var globals = require('../globals')
-
-var interval;
+var htmlToBr = require('../lib/aino/htmltobr')
 
 module.exports = React.createClass({
 
@@ -35,83 +33,41 @@ module.exports = React.createClass({
     if ( card.get('captionType') == 'bottom' )
       $card.css('width', $card.find('img').width())
 
-    if ( !this.refs.caption )
-      return
-
-    var elem = this.refs.caption.getDOMNode()
-
-    if ( !globals.isEditMode() ) {
-      elem.innerHTML = card.get('caption')
-      return
-    }
-
-    card.hasChanged = false
-
-    var type = elem.getAttribute('data-type')
-    var opts = {
-      placeholder: 'Enter a '+type
-    }
-
-    var m = Medium( elem, opts )
-    var data = card.get( type )
-
-    data && m.setContent(data)
-    
-    m.change(function(html) {
-      self.changeHandler.call(self, elem, html)
-    })
-
-    $(elem).focus()
-
-    rangy.addInitListener(function() {
-      var range = rangy.createRange()
-      range.selectNodeContents(elem)
-      range.collapse(false)
-      var sel = rangy.getSelection()
-      sel.removeAllRanges()
-      sel.addRange(range)
-    })
-
-    interval = setInterval(function() {
-      if ( card.hasChanged ) {
-        card.save()
-        card.hasChanged = false
-      }
-    }, 1000)
-
-  },
-
-  componentWillUnmount: function() {
-    clearInterval(interval)
-  },
-
-  cleanUp: function(html) {
-
-    html = $.trim(html)
-    if( !$('<div>').html(html).text() )
-      return ''
-
-    // remove empty last paragraphs
-    return $.trim( html.replace(/(<p>\s*<br>\s*<\/p>)+$/, '') )
-
-  },
-
-  changeHandler: function(elem, html) {
-    var set = {}
-
-    set[elem.getAttribute('data-type')] = this.cleanUp(html)
-    this.props.card.set(set, {
-      silent: true
-    })
-    this.props.card.hasChanged = true
   },
 
   closeHandler: function() {
     Router.navigate('/', { trigger: true })
   },
 
-  imageHandler: function() {
+  imageUploadHandler: function(imageObj) {
+
+    var card = this.props.card
     this.componentDidUpdate()
+
+    var set = {
+      image: imageObj
+    }
+
+    // copy to thumbnail if empty or same
+    if ( !card.get('thumb') || card.get('thumb').name === card.get('image').name )
+      set.thumb = imageObj
+
+    card.set(set).save()
+  },
+
+  captionUpdateHandler: function(html, text) {
+
+    var card = this.props.card
+
+    var set = {
+      caption: html
+    }
+
+    // copy to summary if empty or same
+    if ( !card.get('summary') || card.get('summary') === htmlToBr(card.get('caption')) )
+      set.summary = text
+
+    this.props.card.set(set, { silent: true }).save()
   },
 
   selectCaptionAction: function(e) {
@@ -126,12 +82,13 @@ module.exports = React.createClass({
     var tools
     var caption
     var classNames = ['card-detail']
-    var captionType = this.props.card.get('captionType')
+    var card = this.props.card
+    var captionType = card.get('captionType')
 
     if ( captionType )
       classNames.push('caption-'+captionType)
 
-    if(globals.isEditMode()) {
+    if(globals.get('editmode')) {
       tools = (
         <div className="card-toolbar">
           <select onChange={this.selectCaptionAction} value={captionType}>
@@ -142,17 +99,15 @@ module.exports = React.createClass({
           </select>
         </div>
       )
-      caption = <div key="editable" ref="caption" className="editable content" data-type="caption" />
-    } else {
-      caption = <div key="static" ref="caption" className="content" />
     }
 
     return (
       <ModalComponent closeHandler={this.closeHandler}>
         <div className={classNames.join(' ')} ref="card">
           {tools}
-          <ImageComponent onChange={this.imageHandler} className="card-image" card={this.props.card} />
+          <ImageComponent onChange={this.imageUploadHandler} className="card-image" image={card.get('image')} />
           <div className="card-content">
+            <EditorComponent onChange={this.captionUpdateHandler} content={card.get('caption')} placeHolder="Enter a caption" />
             {caption}
           </div>
         </div>

@@ -1,10 +1,23 @@
-var editMode = false
+
+var globals = {}
+var has = function(prop) {
+  return globals.hasOwnProperty(prop)
+}
 
 module.exports = {
-  toggleEditMode: function() {
-    editMode = !editMode
+
+  register: function(prop, value) {
+    if ( !has(prop) )
+      globals[prop] = value
   },
-  isEditMode: function() {
-    return editMode
+
+  set: function(prop, value) {
+    if ( has(prop) )
+      globals[prop] = value
+  },
+
+  get: function(prop) {
+    if ( has(prop) )
+      return globals[prop]
   }
 }

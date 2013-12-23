@@ -2,6 +2,9 @@
 
 var React = require('react')
 var Router = require('../router')
+var ImageComponent = require('./image')
+var EditorComponent = require('./editor')
+var htmlToBr = require('../lib/aino/htmltobr')
 
 module.exports = React.createClass({
 
@@ -20,24 +23,27 @@ module.exports = React.createClass({
     Router.navigate('/detail/' + this.props.card.get('slug'), {trigger: true})
   },
 
-  render: function() {
-    
-    var image = this.props.card.get('image')
-    var imageElement, src
+  imageUploadHandler: function(imageObj) {
+    this.props.card.set({
+      thumb: imageObj
+    }).save()
+  },
 
-    if (image) {
-      src = '/public/i/uploads/320/' + image.name
-      imageElement = (
-        <div className="image">
-          <img src={src} width="192" height={image.ratio*192} />
-        </div>
-      )
-    }
+  summaryUpdateHandler: function(html) {
+    this.props.card.set({
+      summary: htmlToBr(html)
+    }, {silent: true}).save()
+  },
+
+  render: function() {
+    var card = this.props.card
     return(
       <li onClick={this.openHandler}>
         <div>
-          {imageElement}
-          <div className="summary" dangerouslySetInnerHTML={{__html: this.props.card.get('caption')}}></div>
+          <ImageComponent size="320" maxWidth="192" maxHeight="1000" image={card.get('thumb')} onChange={this.imageUploadHandler} />
+          <div className="summary">
+            <EditorComponent focus={false} type="text" onChange={this.summaryUpdateHandler} content={card.get('summary')} placeHolder="Summary" />
+          </div>
         </div>
       </li>
     )

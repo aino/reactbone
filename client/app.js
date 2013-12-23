@@ -4,6 +4,7 @@ var React = require('react')
 var AppComponent = require('./components/app')
 var CardCollection = require('./collections/cards')
 var Router = require('./router')
+var globals = require('./globals')
 
 Backbone.$ = $
 
@@ -22,6 +23,9 @@ cards.filter(function(card) {
 var App = AppComponent({
   cards: cards
 });
+
+// register editmode
+globals.register('editmode', false)
 
 React.renderComponent(App, document.body)
 
