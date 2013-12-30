@@ -14,7 +14,7 @@ module.exports = React.createClass({
       placeHolder: 'Write something',
       content: '',
       type: 'rich',
-      focus: true
+      focus: false
     }
   },
 
@@ -25,14 +25,17 @@ module.exports = React.createClass({
 	componentDidUpdate: function() {
 
 		var self = this
-		var elem = this.refs.editor.getDOMNode()
     var isText = this.props.type == 'text'
     var content = this.props.content
+    var ref = this.refs.editor || this.refs.holder
+    var elem = ref.getDOMNode()
 
 		if ( !globals.get('editmode') ) {
-		  elem.innerHTML = content
-      return
-		}
+      var instance = $(elem).data('medium')
+      if ( instance )
+        instance.destroy()
+      return elem.innerHTML = content
+    }
 
     var opts = {
       placeholder: this.props.placeHolder
@@ -81,16 +84,22 @@ module.exports = React.createClass({
   },
 
   clickHandler: function(e) {
-    e.stopPropagation()
+    if ( globals.get('editmode') ) 
+      e.stopPropagation()
   },
 
   render: function() {
 
-    console.log('clean')
-    var editor = <div key="static" ref="editor" className="content" onClick={this.clickHandler} />
+    var classNames = [this.props.className]
+    if ( globals.get('editmode') )
+      classNames.push('editable')
+
+    classNames = classNames.join(' ')
+
+    var editor = <div key="static" ref="holder" className={classNames} onClick={this.clickHandler} />
 
     if ( globals.get('editmode') ) {
-      editor = <div key="editable" ref="editor" className="editable content" onClick={this.clickHandler} />
+      editor = <div key="editable" ref="editor" className={classNames} onClick={this.clickHandler} />
     }
 
     return editor

@@ -28,6 +28,7 @@ app.use( express.errorHandler() )
 // Routes
 app.get( '/', r.index)
 app.post( '/upload', r.upload )
+app.get( '/twitter', r.twitter )
 
 var server = http.createServer( app )
 server.listen( config.port, function() {

@@ -280,6 +280,8 @@
 
     destroy: function() {
       $(prefix+'toolbar').remove()
+      this.$element.removeAttr('contenteditable').data('medium', null)
+      clearInterval(this.interval)
     },
 
     bindSelect: function () {
@@ -551,7 +553,7 @@
     $(window).on('resize', function () {
       clearTimeout(timerResize)
       timerResize = setTimeout(function () {
-        if (self.$toolbar.hasClass(prefix+'toolbar-active')) {
+        if (self.$toolbar && self.$toolbar.hasClass(prefix+'toolbar-active')) {
           self.setToolbarPosition()
         }
       }, 100)

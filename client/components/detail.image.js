@@ -2,41 +2,25 @@
 
 var React = require('react')
 var $ = require('jquery')
-var ImageComponent = require('./image')
-var ModalComponent = require('./modal')
 var EditorComponent = require('./editor')
+var ImageComponent = require('./image')
 var Router = require('../router')
 var globals = require('../globals')
 var htmlToBr = require('../lib/aino/htmltobr')
+var MixinDetail = require('./mixin.detail')
 
 module.exports = React.createClass({
 
-  componentDidMount: function(elem) {
-    this.componentDidUpdate()
-  },
+  mixins: [ MixinDetail ],
 
   componentDidUpdate: function() {
 
     var card = this.props.card
-
-    if ( !card )
-      throw '404'
-
-    var self = this
-
     var $card = $(this.refs.card.getDOMNode())
-    var width = $card.outerWidth()
-    $card.closest('#modal').css({
-      marginLeft: width/-2
-    })
 
     if ( card.get('captionType') == 'bottom' )
       $card.css('width', $card.find('img').width())
 
-  },
-
-  closeHandler: function() {
-    Router.navigate('/', { trigger: true })
   },
 
   imageUploadHandler: function(imageObj) {
@@ -49,7 +33,7 @@ module.exports = React.createClass({
     }
 
     // copy to thumbnail if empty or same
-    if ( !card.get('thumb') || card.get('thumb').name === card.get('image').name )
+    if ( !card.get('thumb') || card.get('image') && card.get('thumb').name === card.get('image').name )
       set.thumb = imageObj
 
     card.set(set).save()
@@ -81,7 +65,7 @@ module.exports = React.createClass({
 
     var tools
     var caption
-    var classNames = ['card-detail']
+    var classNames = ['card-detail', 'card-type-image']
     var card = this.props.card
     var captionType = card.get('captionType')
 
@@ -102,16 +86,14 @@ module.exports = React.createClass({
     }
 
     return (
-      <ModalComponent closeHandler={this.closeHandler}>
-        <div className={classNames.join(' ')} ref="card">
-          {tools}
-          <ImageComponent onChange={this.imageUploadHandler} className="card-image" image={card.get('image')} />
-          <div className="card-content">
-            <EditorComponent onChange={this.captionUpdateHandler} content={card.get('caption')} placeHolder="Enter a caption" />
-            {caption}
-          </div>
+      <div className={classNames.join(' ')} ref="card">
+        {tools}
+        <ImageComponent onChange={this.imageUploadHandler} className="card-image" image={card.get('image')} />
+        <div className="card-content">
+          <EditorComponent onChange={this.captionUpdateHandler} focus={true} content={card.get('caption')} placeHolder="Enter a caption" />
+          {caption}
         </div>
-      </ModalComponent>
+      </div>
     )
   }
 })

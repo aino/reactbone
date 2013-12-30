@@ -2,19 +2,19 @@ var Backbone = require('backbone')
 
 module.exports = Backbone.Model.extend({
   defaults: {
-    caption: '',
-    captiontype: '',
+    date: null,
+    summary: '',
     slug: '',
-    image: null,
-    thumb: null,
     published: false,
-    summary: ''
+    thumb: null,
+    type: '',
+    typetitle: ''
   },
   isEmpty: function() {
-  	var hasCaption = !!this.get('caption').trim()
-  	var hasImage = !!this.get('image')
-  	if ( hasCaption || hasImage )
-  		return false
-  	return true
+  	var hasSummary = this.get('summary') && this.get('summary').trim()
+    var hasThumb = !!this.get('thumb')
+    if ( hasSummary || hasThumb )
+        return false
+    return true
   }
 })
