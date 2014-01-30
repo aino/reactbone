@@ -30,6 +30,7 @@
     "optimist": "~0.6.0",
     "hogan-express": "~0.5.1",
     "hogan.js": "~2.0.0",
-    "node-imagemagick": "~0.1.8"
+    "node-imagemagick": "~0.1.8",
+    "ntwitter": "~0.5.0"
   }
 }

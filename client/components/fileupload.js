@@ -30,7 +30,12 @@ module.exports = React.createClass({
     })
   },
 
+  clickHandler: function(e) {
+    e.stopPropagation()
+  },
+
   render: function() {
-    return <input key={this.state.formkey} type="file" name="file" data-url="/upload" ref="upload" value="" onChange={this.changeHandler} />
+    return <input key={this.state.formkey} type="file" name="file" onClick={this.clickHandler}
+      data-url="/upload" ref="upload" value="" onChange={this.changeHandler} />
   }
 })

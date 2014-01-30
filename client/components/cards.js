@@ -12,7 +12,7 @@ module.exports = React.createClass({
   componentDidMount: function(ul) {
     if ( !masonry ) {
       masonry = new Masonry(ul, {
-        width: 192,
+        width: 240,
         gutter: 12
       })
     }
