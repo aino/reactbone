@@ -7,14 +7,19 @@ var Router = require('./router')
 var globals = require('./globals')
 var CardTweetModel = require('./models/card.tweet')
 
+var Animate = require('./lib/aino/animate')
+
 Backbone.$ = $
 
 // initialize cards
 var cards = new CardCollection()
-cards.comparator = 'date';
+cards.comparator = function(model) { 
+  return model.get('date') 
+}
 cards.fetch()
 
 // sync twitter
+/*
 $.ajax({
   url: '/twitter?user=davidhellsing',
   success: function(data) {
@@ -31,6 +36,22 @@ $.ajax({
     onTweets()
   }
 })
+*/
+onTweets()
+
+setTimeout(function() {
+
+var anim = Animate({
+  from: 0,
+  to: 255,
+  duration: 2000,
+  step: function(val) {
+    document.body.style.backgroundColor = 'rgb(0,'+parseInt(val,10)+',100)';
+  }
+})
+
+},1000)
+
 
 function onTweets() {
 

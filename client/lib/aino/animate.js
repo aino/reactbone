@@ -45,14 +45,16 @@
       value: options.from,
       loop: function() {
         var self = this,
-        distance = options.to - this.value
+            distance = options.to - this.value
 
         if ( !this.hasOwnProperty('distance') )
           this.distance = distance
 
         this.start = this.start || +new Date()
 
-        if ( Math.abs( distance ) <= options.threshold )
+        var elapsed = +new Date() - this.start
+
+        if ( elapsed > options.duration || Math.abs( distance ) <= options.threshold )
           return this.stop( true )
 
         this.value = options.easing(null, +new Date() - this.start, options.from, this.distance, options.duration)
