@@ -3,7 +3,7 @@
 var React = require('react')
 var CardComponent = require('../components/card')
 var $ = require('jquery')
-var Masonry = require('../lib/aino/masonry')
+var Masonry = require('aino/masonry')
 
 var masonry;
 

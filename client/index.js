@@ -4,10 +4,10 @@ var React = require('react')
 var AppComponent = require('./components/app')
 var CardCollection = require('./collections/cards')
 var Router = require('./router')
-var globals = require('./globals')
+var globals = require('aino/globals')
 var CardTweetModel = require('./models/card.tweet')
 
-var Animate = require('./lib/aino/animate')
+var Animate = require('aino/animate')
 
 Backbone.$ = $
 
@@ -38,20 +38,6 @@ $.ajax({
 })
 */
 onTweets()
-
-setTimeout(function() {
-
-var anim = Animate({
-  from: 0,
-  to: 255,
-  duration: 2000,
-  step: function(val) {
-    document.body.style.backgroundColor = 'rgb(0,'+parseInt(val,10)+',100)';
-  }
-})
-
-},1000)
-
 
 function onTweets() {
 

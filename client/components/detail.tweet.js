@@ -3,9 +3,9 @@
 var React = require('react')
 var $ = require('jquery')
 var EditorComponent = require('./editor')
-var globals = require('../globals')
+var globals = require('aino/globals')
 var MixinDetail = require('./mixin.detail')
-var htmlToBr = require('../lib/aino/htmltobr')
+var htmlToBr = require('aino/htmltobr')
 var string = require('underscore.string')
 
 module.exports = React.createClass({

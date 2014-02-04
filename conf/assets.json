@@ -2,7 +2,7 @@
   "apps": [
       {
         "name": "app", 
-        "src": "app.js", 
+        "src": "index.js", 
         "dest": "app.bundle.js"
       }
   ],
@@ -15,6 +15,11 @@
     , {"name": "Backbone.localStorage", "manifest": "package.json"}
     , {"name": "jquery.ui.widget", "modulesDir": "lib", "src": "lib/jquery.ui.widget.js"}
     , {"name": "rangy", "modulesDir": "lib", "src": "lib/rangy/core-saverestore.js"}
+    , {"name": "aino/globals", "src": "../bower_components/ainojs/globals"}
+    , {"name": "aino/animate", "src": "../bower_components/ainojs/animate"}
+    , {"name": "aino/masonry", "src": "../bower_components/ainojs/masonry"}
+    , {"name": "aino/editor", "src": "../bower_components/ainojs/editor/editor"}
+    , {"name": "aino/htmltobr", "src": "../bower_components/ainojs/htmltobr"}
   ],
   "libsMeta": {
       "name": "libs"

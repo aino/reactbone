@@ -14,7 +14,7 @@ var ModalComponent = require('./modal')
 var Router = require('../router')
 var Backbone = require('backbone')
 var _ = require('underscore')
-var globals = require('../globals')
+var globals = require('aino/globals')
 
 var factoryTypes = {
   'image': [CardImageModel, DetailImageComponent],

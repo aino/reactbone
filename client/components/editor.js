@@ -2,10 +2,10 @@
 
 var React = require('react')
 var $ = require('jquery')
-var Medium = require('../lib/aino/medium')
+var Editor = require('aino/editor')
 var rangy = require('rangy')
-var globals = require('../globals')
-var htmlToBr = require('../lib/aino/htmltobr')
+var globals = require('aino/globals')
+var htmlToBr = require('aino/htmltobr')
 
 module.exports = React.createClass({
 
@@ -31,7 +31,7 @@ module.exports = React.createClass({
     var elem = ref.getDOMNode()
 
 		if ( !globals.get('editmode') ) {
-      var instance = $(elem).data('medium')
+      var instance = $(elem).data('editor')
       if ( instance )
         instance.destroy()
       return elem.innerHTML = content
@@ -46,11 +46,11 @@ module.exports = React.createClass({
       opts.plainText = true
     }
 
-    var medium = Medium( elem, opts )
+    var editor = Editor( elem, opts )
 
-    medium.setContent(content)
+    editor.setContent(content)
     
-    medium.change(function(html) {
+    editor.change(function(html) {
       if ( typeof self.props.onChange == 'function' ) {
         var clean = self.cleanUp(html)
         self.props.onChange(clean, htmlToBr(clean))

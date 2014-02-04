@@ -5,7 +5,7 @@ var Router = require('../router')
 var ImageComponent = require('./image')
 var EditorComponent = require('./editor')
 var DropdownComponent = require('./dropdown')
-var htmlToBr = require('../lib/aino/htmltobr')
+var htmlToBr = require('aino/htmltobr')
 var $ = require('jquery')
 
 var height;

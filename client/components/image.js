@@ -2,7 +2,7 @@
 
 var React = require('react')
 var UploadComponent = require('./fileupload')
-var globals = require('../globals')
+var globals = require('aino/globals')
 
 module.exports = React.createClass({
 

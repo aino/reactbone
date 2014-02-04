@@ -5,8 +5,8 @@ var $ = require('jquery')
 var EditorComponent = require('./editor')
 var ImageComponent = require('./image')
 var Router = require('../router')
-var globals = require('../globals')
-var htmlToBr = require('../lib/aino/htmltobr')
+var globals = require('aino/globals')
+var htmlToBr = require('aino/htmltobr')
 var MixinDetail = require('./mixin.detail')
 
 module.exports = React.createClass({
