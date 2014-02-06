@@ -73,10 +73,10 @@ module.exports = React.createClass({
       <li onClick={this.openHandler} ref="li" className={'type-'+card.get('type')}>
         {type}
         <div>
-          <ImageComponent size="320" maxWidth="240" maxHeight="1000" image={card.get('thumb')} onChange={this.imageUploadHandler} />
+          <ImageComponent size="320" maxWidth="240" maxHeight="1000" locked="1" image={card.get('thumb')} onChange={this.imageUploadHandler} />
           {title}
           <div className="description" ref="description">
-            <EditorComponent className="summary" focus={false} type="text" onChange={this.summaryUpdateHandler} content={card.get('summary')} placeHolder="Summary" />
+            <EditorComponent className="summary" focus={false} type="text" locked="1" onChange={this.summaryUpdateHandler} content={card.get('summary')} placeHolder="Summary" />
           </div>
         </div>
       </li>

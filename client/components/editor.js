@@ -9,6 +9,10 @@ var htmlToBr = require('aino/htmltobr')
 
 module.exports = React.createClass({
 
+  isEditMode: function() {
+    return globals.get('editmode') && !this.props.locked
+  },
+
 	getDefaultProps: function() {
     return {
       placeHolder: 'Write something',
@@ -30,7 +34,7 @@ module.exports = React.createClass({
     var ref = this.refs.editor || this.refs.holder
     var elem = ref.getDOMNode()
 
-		if ( !globals.get('editmode') ) {
+		if ( !this.isEditMode() ) {
       var instance = $(elem).data('editor')
       if ( instance )
         instance.destroy()
@@ -84,23 +88,25 @@ module.exports = React.createClass({
   },
 
   clickHandler: function(e) {
-    if ( globals.get('editmode') ) 
+    if ( this.isEditMode() ) 
       e.stopPropagation()
   },
 
   render: function() {
 
     var classNames = [this.props.className]
-    if ( globals.get('editmode') )
+    if ( this.isEditMode() )
       classNames.push('editable')
 
     classNames = classNames.join(' ')
 
     var editor = <div key="static" ref="holder" className={classNames} onClick={this.clickHandler} />
 
-    if ( globals.get('editmode') ) {
+    if ( this.isEditMode() ) {
+      console.log('NOEDIT')
       editor = <div key="editable" ref="editor" className={classNames} onClick={this.clickHandler} />
-    }
+    } else
+      console.log('NOEDIT')
 
     return editor
   }

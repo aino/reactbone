@@ -29,7 +29,7 @@ module.exports = React.createClass({
     var image = this.props.image
 		var imageClasses = ['img']
 		var imageElement
-    var upload = globals.get('editmode') ? <UploadComponent handler={this.uploadHandler} /> : null
+    var upload = globals.get('editmode') && !this.props.locked ? <UploadComponent handler={this.uploadHandler} /> : null
     var width, height, ratio
     var size = this.props.size
 
